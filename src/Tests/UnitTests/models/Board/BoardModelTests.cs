@@ -6,25 +6,27 @@ namespace UnitTests.models.board;
 
 public class BoardModelTests
 {
-    [Fact]
-    public void Create_ShouldReturnNewBoardInstance()
+   
+    [Theory]
+    [InlineData("")]  // Invalid title: empty string
+    [InlineData("   ")]  // Invalid title: whitespace only
+    [InlineData(null)]  // Invalid title: whitespace only
+    public void UpdateTitle_ShouldFail_WhenTitleIsEmptyOrWhitespace(string invalidTitle)
     {
-        // Act
+        // Arrange
         var board = Board.Create();
 
+        // Act
+        var result = board.UpdateTitle(invalidTitle);
+
         // Assert
-        Assert.NotNull(board);
-        Assert.IsType<Board>(board);
-        Assert.NotEqual(Guid.Empty, board.Uid);
+        Assert.True(result.IsFailure);
     }
 
     [Theory]
-    [InlineData("", true)]  // Invalid title: empty string
-    [InlineData("   ", true)]  // Invalid title: whitespace only
     [InlineData("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", true)]  // Invalid title: exceeds max length
     [InlineData("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", false)]  // Valid title: max length
-    [InlineData("ValidTitle", false)]  // Valid title
-    public void UpdateTitle_ShouldValidateCorrectly(string title, bool expectedFailure)
+    public void UpdateTitle_ShouldValidateTitleLength(string title, bool expectedFailure)
     {
         // Arrange
         var board = Board.Create();

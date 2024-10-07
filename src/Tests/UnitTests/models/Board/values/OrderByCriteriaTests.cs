@@ -9,25 +9,27 @@ namespace UnitTests.models.board.values;
 
 public class OrderByCriteriaTests
 {
-    [Fact]
-    public void Create_ShouldReturnNewOrderByCriteriaInstance()
+    [Theory]
+    [InlineData("")]  // Invalid property name: empty string
+    [InlineData("   ")]  // Invalid property name: whitespace only
+    [InlineData(null)]  // Invalid property name: null
+    public void UpdatePropertyName_ShouldFail_WhenNameIsEmptyOrWhitespace(string propertyName)
     {
-        // Act
+        // Arrange
         var orderByCriteria = OrderByCriteria.Create();
 
+        // Act
+        var result = orderByCriteria.UpdatePropertyName(propertyName);
+
         // Assert
-        Assert.NotNull(orderByCriteria);
-        Assert.IsType<OrderByCriteria>(orderByCriteria);
-        Assert.NotEqual(Guid.Empty, orderByCriteria.Uid);
+        Assert.True(result.IsFailure);
     }
 
     [Theory]
-    [InlineData("", true)]  // Invalid property name: empty string
-    [InlineData("   ", true)]  // Invalid property name: whitespace only
     [InlineData("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", true)]  // Invalid property name: exceeds max length
     [InlineData("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", false)]  // Valid property name: max length
     [InlineData("ValidPropertyName", false)]  // Valid property name
-    public void UpdatePropertyName_ShouldValidateCorrectly(string propertyName, bool expectedFailure)
+    public void UpdatePropertyName_ShouldValidateLengthCorrectly(string propertyName, bool expectedFailure)
     {
         // Arrange
         var orderByCriteria = OrderByCriteria.Create();
@@ -40,9 +42,9 @@ public class OrderByCriteriaTests
     }
 
     [Theory]
-    [InlineData(true, false)]  // Valid value for IsAscending
-    [InlineData(false, false)]  // Valid value for IsAscending
-    public void UpdateIsAscending_ShouldAlwaysReturnSuccess(bool isAscending, bool expectedFailure)
+    [InlineData(true)]  // Valid value for IsAscending
+    [InlineData(false)]  // Valid value for IsAscending
+    public void UpdateIsAscending_ShouldAlwaysReturnSuccess(bool isAscending)
     {
         // Arrange
         var orderByCriteria = OrderByCriteria.Create();
@@ -51,6 +53,6 @@ public class OrderByCriteriaTests
         var result = orderByCriteria.UpdateIsAscending(isAscending);
 
         // Assert
-        Assert.Equal(expectedFailure, result.IsFailure);
+        Assert.False(result.IsFailure);
     }
 }

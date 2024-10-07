@@ -15,28 +15,26 @@ public class BoardValidator
     /// <returns>A <see cref="Result"/> indicating if the title is valid or not.</returns>
     public static Result<string> ValidateTitle(string title)
     {
-        var errors = new List<Exception>();
-
-        // ? Is the title null, empty, or whitespace?
+        // Check if the title is null, empty, or whitespace.
         if (string.IsNullOrWhiteSpace(title))
         {
-            errors.Add(new BoardTitleEmptyException());
-            return Result<string>.Failure(errors.ToArray());
+            return Result<string>.Failure(new BoardTitleEmptyException());
         }
 
-        // ? Is the title too short or too long?
-        switch (title)
+        // Check if the title is too short.
+        if (title.Length < 3)
         {
-            case { Length: < 3 }:
-                errors.Add(new BoardTitleTooShortException());
-                break;
-            case { Length: > 75 }:
-                errors.Add(new BoardTitleTooLongException());
-                break;
+            return Result<string>.Failure(new BoardTitleTooShortException());
         }
 
-        // * If there are any errors, return failure; otherwise, return success.
-        return errors.Any() ? Result<string>.Failure(errors.ToArray()) : Result<string>.Success(title);
+        // Check if the title is too long.
+        if (title.Length > 75)
+        {
+            return Result<string>.Failure(new BoardTitleTooLongException());
+        }
+
+        // If all validations pass, return success.
+        return Result<string>.Success(title);
     }
 
     /// <summary>
