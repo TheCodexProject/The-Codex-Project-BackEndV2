@@ -8,3 +8,5 @@ riderModule.iml
 *.db
 *.db-shm
 *.db-wal
+**/obj/
+The-Codex-Project-BackEndV2.sln.DotSettings.user
