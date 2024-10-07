@@ -1,4 +1,4 @@
-﻿namespace domain.exceptions.models.resource.Title;
+﻿namespace domain.exceptions.models.resource.title;
 
 /// <summary>
 /// An exception that is thrown when the title of a resource is too long.

@@ -1,4 +1,4 @@
-﻿namespace domain.exceptions.models.resource.Format;
+﻿namespace domain.exceptions.models.resource.format;
 
 /// <summary>
 /// An exception used when the format of a resource is invalid.

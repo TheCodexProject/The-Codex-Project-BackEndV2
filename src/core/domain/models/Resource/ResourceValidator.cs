@@ -1,7 +1,7 @@
 ﻿using domain.exceptions.common;
-using domain.exceptions.models.resource.Format;
-using domain.exceptions.models.resource.Reference;
-using domain.exceptions.models.resource.Title;
+using domain.exceptions.models.resource.format;
+using domain.exceptions.models.resource.reference;
+using domain.exceptions.models.resource.title;
 using OperationResult;
 
 namespace domain.models.resource;

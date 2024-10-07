@@ -1,4 +1,4 @@
-﻿namespace domain.exceptions.models.resource.Reference;
+﻿namespace domain.exceptions.models.resource.reference;
 
 /// <summary>
 /// An exception used when the reference of a resource is too long.
