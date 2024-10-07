@@ -1,6 +1,8 @@
 ﻿
 
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using domain.exceptions.common;
+using domain.exceptions.models.board.filterCriteria;
+using domain.exceptions.models.Board.FilterCriteria;
 using OperationResult;
 
 namespace domain.models.board.values;
@@ -17,13 +19,13 @@ public static class FilterCriteriaValidator
         // ? Is the property name null or empty?
         if (string.IsNullOrWhiteSpace(propertyName))
         {
-            return Result.Failure(new ArgumentNullException(nameof(propertyName), "Property name cannot be null or empty."));
+            return Result.Failure(new NotFoundException("The property orderBy is invalid. Property cannot be empty."));
         }
 
         // ? Is the property name too long?
         if (propertyName.Length > 75)
         {
-            return Result.Failure(new ArgumentException("Property name cannot exceed 75 characters."));
+            return Result.Failure(new FilterCriteriaPropertyNameTooLongException());
         }
 
         // Additional checks can be added here as needed
@@ -41,14 +43,14 @@ public static class FilterCriteriaValidator
         // ? Is the operator null or empty?
         if (string.IsNullOrWhiteSpace(@operator))
         {
-            return Result.Failure(new ArgumentNullException(nameof(@operator), "Operator cannot be null or empty."));
+            return Result.Failure(new NotFoundException("The provided operator is invalid. Operator cannot be empty."));
         }
 
         // ? Is the operator supported?
         var validOperators = new[] { "Equals", "Contains", "GreaterThan", "LessThan" };
         if (!validOperators.Contains(@operator))
         {
-            return Result.Failure(new ArgumentException($"The provided operator '{@operator}' is not supported."));
+            return Result.Failure(new FilterCriteriaOperaterNotSupportedException());
         }
 
         return Result.Success();
@@ -64,13 +66,13 @@ public static class FilterCriteriaValidator
         // ? Is the value null or empty?
         if (string.IsNullOrWhiteSpace(value))
         {
-            return Result.Failure(new ArgumentNullException(nameof(value), "Value cannot be null or empty."));
+            return Result.Failure(new NotFoundException("The provided value is invalid. Value cannot be empty."));
         }
 
         // ? Is the property name too long?
         if (value.Length > 75)
         {
-            return Result.Failure(new ArgumentException("Property name cannot exceed 75 characters."));
+            return Result.Failure(new FilterCriteriaValueNameTooLongException());
         }
 
         return Result.Success();

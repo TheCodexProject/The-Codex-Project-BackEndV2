@@ -1,4 +1,5 @@
 ﻿using domain.exceptions.common;
+using domain.exceptions.models.board.orderByCriteria;
 using OperationResult;
 using System;
 using System.Collections.Generic;
@@ -20,13 +21,13 @@ public static class OrderByCriteriaValidator
         // ? Is the property name null or empty?
         if (string.IsNullOrWhiteSpace(propertyName))
         {
-            return Result.Failure(new ArgumentNullException(nameof(propertyName), "Property name cannot be null or empty."));
+            return Result.Failure(new NotFoundException("The provided property is invalid. Property cannot be empty."));
         }
 
         // ? Is the property name too long?
         if (propertyName.Length > 75)
         {
-            return Result.Failure(new ArgumentException("Property name cannot exceed 75 characters."));
+            return Result.Failure(new OrderByCriteriaPropertyNameTooLongException());
         }
 
         // Additional checks can be added here as needed

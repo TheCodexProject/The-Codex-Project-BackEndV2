@@ -50,7 +50,7 @@ public class BoardValidator
         // ? Is the filter criteria null?
         if (filterCriteria == null)
         {
-            return Result.Failure(new ArgumentNullException(nameof(filterCriteria), "Filter criteria cannot be null."));
+            return Result.Failure(new NotFoundException("The provided filter is invalid. Filter cannot be empty."));
         }
 
         // ? Is the filter criteria already in the list?
@@ -73,7 +73,7 @@ public class BoardValidator
         // ? Is the filter criteria null?
         if (filterCriteria == null)
         {
-            return Result.Failure(new ArgumentNullException(nameof(filterCriteria), "Filter criteria cannot be null."));
+            return Result.Failure(new NotFoundException("The provided filter is invalid. Filter cannot be empty."));
         }
 
         // ? Does the filter criteria exist in the list?
@@ -96,7 +96,7 @@ public class BoardValidator
         // ? Is the order by criteria null?
         if (orderByCriteria == null)
         {
-            return Result.Failure(new ArgumentNullException(nameof(orderByCriteria), "Order by criteria cannot be null."));
+            return Result.Failure(new NotFoundException("The provided orderBy is invalid. OrderBy cannot be empty."));
         }
 
         // ? Is the order by criteria already in the list?
@@ -119,7 +119,7 @@ public class BoardValidator
         // ? Is the order by criteria null?
         if (orderByCriteria == null)
         {
-            return Result.Failure(new ArgumentNullException(nameof(orderByCriteria), "Order by criteria cannot be null."));
+            return Result.Failure(new NotFoundException("The provided orderBy is invalid. OrderBy cannot be empty."));
         }
 
         // ? Does the order by criteria exist in the list?
