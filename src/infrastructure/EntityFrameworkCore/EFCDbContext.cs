@@ -47,6 +47,7 @@ public class EfcDbContext : DbContext
         modelBuilder.ApplyConfiguration(new MilestoneConfiguration());
         modelBuilder.ApplyConfiguration(new IterationConfiguration());
         modelBuilder.ApplyConfiguration(new WorkspaceConfiguration());
+        modelBuilder.ApplyConfiguration(new ProjectConfiguration());
         base.OnModelCreating(modelBuilder);
     }
 }

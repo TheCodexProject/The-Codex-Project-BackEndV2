@@ -10,3 +10,6 @@ riderModule.iml
 *.db-wal
 **/obj/
 The-Codex-Project-BackEndV2.sln.DotSettings.user
+
+# .gitignore should also include the migration files
+Migrations/

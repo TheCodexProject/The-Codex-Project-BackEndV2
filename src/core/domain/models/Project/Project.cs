@@ -1,7 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using domain.models.board;
+using domain.models.iteration;
+using domain.models.milestone;
 using domain.models.project.values;
 using domain.models.values;
+using domain.models.workitem;
 
 namespace domain.models.project;
 
@@ -28,6 +32,20 @@ public class Project
     public Status? Status { get; private set; }
 
     public Priority? Priority { get; private set; }
+
+    #region Relations
+
+    public List<WorkItem> WorkItems { get; private set; } = [];
+
+    public List<Iteration> Iterations { get; private set; } = [];
+
+    public List<Board> Boards { get; private set; } = [];
+
+    public List<Milestone> Milestones { get; private set; } = [];
+
+    #endregion
+
+
 
     private Project()
     {
