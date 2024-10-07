@@ -1,11 +1,9 @@
-﻿using System.Runtime.Serialization;
-
+﻿
 namespace domain.exceptions.models.iteration.iterationTitle;
 
 /// <summary>
 /// Exception for when a Iteration is created with a title that are too long.
 /// </summary>
-[Serializable]
 public class IterationTitleTooLongException : Exception
 {
     /// <summary>
@@ -18,18 +16,4 @@ public class IterationTitleTooLongException : Exception
     /// </summary>
     /// <param name="message">Customized message.</param>
     public IterationTitleTooLongException(string message) : base(message) { }
-
-    /// <summary>
-    /// Used for inner exceptions (Like when an exception is thrown inside another exception)
-    /// </summary>
-    /// <param name="message">Customized message.</param>
-    /// <param name="innerException">Inner exception.</param>
-    public IterationTitleTooLongException(string message, Exception innerException) : base(message, innerException) { }
-
-    /// <summary>
-    /// Used for serialization.
-    /// </summary>
-    /// <param name="info"></param>
-    /// <param name="context"></param>
-    protected IterationTitleTooLongException(SerializationInfo info, StreamingContext context) : base(info, context) { }
 }

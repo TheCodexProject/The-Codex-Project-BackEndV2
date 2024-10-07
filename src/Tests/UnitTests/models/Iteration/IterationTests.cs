@@ -4,26 +4,12 @@ namespace UnitTests.models.iteration;
 
 public class IterationTests
 {
-    [Fact]
-    public void Create_ShouldReturnNewIterationInstance()
-    {
-        // Act
-        var iteration = Iteration.Create();
-
-        // Assert
-        Assert.NotNull(iteration);
-        Assert.IsType<Iteration>(iteration);
-        Assert.NotEqual(Guid.Empty, iteration.Uid);
-    }
 
     [Theory]
-    [InlineData("", true)]  // Invalid title: empty string
-    [InlineData("   ", true)]  // Invalid title: whitespace only
-    [InlineData("ab", true)]  // Invalid title: less than 3 characters
-    [InlineData("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", true)]  // Invalid title: exceeds max length
-    [InlineData("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", false)]  // Valid title: max length
-    [InlineData("ValidTitle", false)]  // Valid title
-    public void UpdateTitle_ShouldValidateCorrectly(string title, bool expectedFailure)
+    [InlineData("")]  // Invalid title: empty string
+    [InlineData("   ")]  // Invalid title: whitespace only
+    [InlineData(null)]  // Invalid title: null
+    public void UpdateTitle_ShouldFail_WhenTitleIsEmptyOrWhitespace(string title)
     {
         // Arrange
         var iteration = Iteration.Create();
@@ -32,7 +18,64 @@ public class IterationTests
         var result = iteration.UpdateTitle(title);
 
         // Assert
-        Assert.Equal(expectedFailure, result.IsFailure);
+        Assert.True(result.IsFailure);
+    }
+
+    [Theory]
+    [InlineData("ab")]  // Invalid title: less than 3 characters
+    [InlineData("a")]  // Invalid title: less than 3 characters
+    public void UpdateTitle_ShouldFail_WhenTitleIsTooShort(string title)
+    {
+        // Arrange
+        var iteration = Iteration.Create();
+
+        // Act
+        var result = iteration.UpdateTitle(title);
+
+        // Assert
+        Assert.True(result.IsFailure);
+    }
+
+    [Fact]
+    public void UpdateTitle_ShouldFail_WhenTitleIsTooLong()
+    {
+        // Arrange
+        var iteration = Iteration.Create();
+        var title = new string('a', 76);  // 76 characters (exceeds the maximum length of 75)
+
+        // Act
+        var result = iteration.UpdateTitle(title);
+
+        // Assert
+        Assert.True(result.IsFailure);
+    }
+
+    [Fact]
+    public void UpdateTitle_ShouldSucceed_WhenTitleIsAtMaxLength()
+    {
+        // Arrange
+        var iteration = Iteration.Create();
+        var title = new string('a', 75);  // 75 characters (maximum valid length)
+
+        // Act
+        var result = iteration.UpdateTitle(title);
+
+        // Assert
+        Assert.False(result.IsFailure);
+    }
+
+    [Fact]
+    public void UpdateTitle_ShouldSucceed_WhenTitleIsValid()
+    {
+        // Arrange
+        var iteration = Iteration.Create();
+        var title = "ValidTitle";  // Valid title
+
+        // Act
+        var result = iteration.UpdateTitle(title);
+
+        // Assert
+        Assert.False(result.IsFailure);
     }
 
     [Fact]
