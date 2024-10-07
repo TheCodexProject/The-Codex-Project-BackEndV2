@@ -1,4 +1,4 @@
-﻿namespace domain.exceptions.models.project.Description;
+﻿namespace domain.exceptions.models.project.description;
 
 /// <summary>
 /// An exception used when the project description is too long.

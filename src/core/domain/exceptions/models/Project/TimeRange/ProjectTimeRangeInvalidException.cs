@@ -1,4 +1,4 @@
-namespace domain.exceptions.models.project.TimeRange;
+namespace domain.exceptions.models.project.timeRange;
 
 /// <summary>
 /// An exception for when a Project is created with an invalid time range.

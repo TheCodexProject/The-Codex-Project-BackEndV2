@@ -1,8 +1,8 @@
 using domain.exceptions.common;
-using domain.exceptions.models.project.Description;
-using domain.exceptions.models.project.Status;
-using domain.exceptions.models.project.TimeRange;
-using domain.exceptions.models.project.Title;
+using domain.exceptions.models.project.description;
+using domain.exceptions.models.project.status;
+using domain.exceptions.models.project.timeRange;
+using domain.exceptions.models.project.title;
 using domain.models.board;
 using domain.models.iteration;
 using domain.models.milestone;

@@ -1,4 +1,4 @@
-﻿namespace domain.exceptions.models.project.Status;
+﻿namespace domain.exceptions.models.project.status;
 
 /// <summary>
 /// An exception used when the project status is empty.

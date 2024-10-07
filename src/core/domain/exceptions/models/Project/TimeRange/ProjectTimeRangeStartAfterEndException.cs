@@ -1,4 +1,4 @@
-﻿namespace domain.exceptions.models.project.TimeRange;
+﻿namespace domain.exceptions.models.project.timeRange;
 
 /// <summary>
 /// An exception used when the start time is after the end time.

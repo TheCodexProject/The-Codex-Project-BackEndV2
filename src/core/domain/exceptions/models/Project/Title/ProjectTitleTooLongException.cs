@@ -1,4 +1,4 @@
-﻿namespace domain.exceptions.models.project.Title;
+﻿namespace domain.exceptions.models.project.title;
 
 /// <summary>
 /// An exception used when the project title is too long.
