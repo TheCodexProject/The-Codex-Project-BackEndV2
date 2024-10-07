@@ -15,18 +15,5 @@ public class OrganisationOwnerNotFoundException :Exception
     /// </summary>
     /// <param name="message">Customized message.</param>
     public OrganisationOwnerNotFoundException(string message) : base(message) { }
-    
-    /// <summary>
-    /// Used for inner exceptions (Like when an exception is thrown inside another exception)
-    /// </summary>
-    /// <param name="message">Customized message.</param>
-    /// <param name="innerException">Inner exception.</param>
-    public OrganisationOwnerNotFoundException(string message, Exception innerException) : base(message, innerException) { }
-    
-    /// <summary>
-    /// Used for serialization.
-    /// </summary>
-    /// <param name="info"></param>
-    /// <param name="context"></param>
-    protected OrganisationOwnerNotFoundException(SerializationInfo info, StreamingContext context) : base(info, context) { }
+
 }

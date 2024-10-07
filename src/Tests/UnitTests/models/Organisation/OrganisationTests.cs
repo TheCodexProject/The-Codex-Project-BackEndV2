@@ -6,7 +6,7 @@ using domain.models.user;
 
 namespace UnitTests.models.organisation
 {
-    public class OrganisationModelTests
+    public class OrganisationTests
     {
         // # 1 - Create a new Organisation
         [Fact]
