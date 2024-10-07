@@ -26,7 +26,7 @@ public class FilterCriteria
         Uid = Guid.NewGuid();
     }
 
-    public FilterCriteria Create()
+    public static FilterCriteria Create()
     {
         return new FilterCriteria();
     }

@@ -1,5 +1,6 @@
 ﻿
 
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using OperationResult;
 
 namespace domain.models.board.values;
@@ -66,7 +67,11 @@ public static class FilterCriteriaValidator
             return Result.Failure(new ArgumentNullException(nameof(value), "Value cannot be null or empty."));
         }
 
-        // Additional checks can be added here as needed
+        // ? Is the property name too long?
+        if (value.Length > 75)
+        {
+            return Result.Failure(new ArgumentException("Property name cannot exceed 75 characters."));
+        }
 
         return Result.Success();
     }

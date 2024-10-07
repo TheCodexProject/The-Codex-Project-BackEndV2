@@ -17,8 +17,8 @@ public class BoardValidator
     {
         var errors = new List<Exception>();
 
-        // ? Is the title null or empty?
-        if (string.IsNullOrEmpty(title))
+        // ? Is the title null, empty, or whitespace?
+        if (string.IsNullOrWhiteSpace(title))
         {
             errors.Add(new BoardTitleEmptyException());
             return Result<string>.Failure(errors.ToArray());
