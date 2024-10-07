@@ -45,6 +45,11 @@ public static class ResourceValidator
             return Result<string>.Failure(new ResourceFormatInvalidException("The format must always start with a dot."));
         }
 
+        if(!ContainsValidNumberOfDots(format))
+        {
+            return Result<string>.Failure(new ResourceFormatInvalidException("The format must contain only one dot."));
+        }
+
         if (format.Length < 2)
         {
             return Result<string>.Failure(new ResourceFormatTooShortException());
@@ -56,6 +61,12 @@ public static class ResourceValidator
         }
 
         return Result<string>.Success(format);
+    }
+
+    private static bool ContainsValidNumberOfDots(string format)
+    {
+        var dots = format.Count(c => c == '.');
+        return dots == 1;
     }
 
     public static Result<string> ValidateReference(string reference)
