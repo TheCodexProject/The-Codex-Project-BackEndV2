@@ -5,6 +5,7 @@ using domain.models.iteration;
 using domain.models.milestone;
 using domain.models.organisation;
 using domain.models.project;
+using domain.models.resource;
 using domain.models.user;
 using domain.models.workitem;
 using domain.models.workspace;
