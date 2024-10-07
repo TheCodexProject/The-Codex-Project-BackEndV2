@@ -141,7 +141,7 @@ public class Milestone
     public Result AddSubItem(WorkItem? workItem, User? modifiedBy = null)
     {
         // ! Validate the sub item.
-        var result = MilestoneValidator.ValidateAddWorkItem(workItem, WorkItems.Select(x => x.Uid).ToList());
+        var result = MilestoneValidator.ValidateAddWorkItem(workItem, WorkItems);
 
         // ? Is the result a failure?
         if (result.IsFailure)
@@ -173,7 +173,7 @@ public class Milestone
     public Result RemoveSubItem(WorkItem? subItem, User? modifiedBy = null)
     {
         // ! Validate the sub item.
-        var result = MilestoneValidator.ValidateRemoveWorkItem(subItem, WorkItems.Select(x => x.Uid).ToList());
+        var result = MilestoneValidator.ValidateRemoveWorkItem(subItem, WorkItems);
 
         // ? Is the result a failure?
         if (result.IsFailure)

@@ -35,7 +35,7 @@ public class MilestoneValidator
         }
     }
 
-    public static Result<Guid> ValidateAddWorkItem(WorkItem? workItem, List<Guid> subItems)
+    public static Result<Guid> ValidateAddWorkItem(WorkItem? workItem, List<WorkItem> workItems)
     {
         if (workItem == null)
         {
@@ -47,25 +47,25 @@ public class MilestoneValidator
             return Result<Guid>.Failure(new NotFoundException("The provided subItem is invalid. Guid cannot be empty."));
         }
 
-        return subItems.Contains(workItem.Uid) ?
+        return workItems.Any(item => item.Uid == workItem.Uid) ?
             Result<Guid>.Failure(new AlreadyExistsException("The provided subItem already exists in the list."))
             : Result<Guid>.Success(workItem.Uid);
     }
 
-    public static Result<Guid> ValidateRemoveWorkItem(WorkItem? subItem, List<Guid> subItems)
+    public static Result<Guid> ValidateRemoveWorkItem(WorkItem? workItem, List<WorkItem> workItems)
     {
-        if (subItem == null)
+        if (workItem == null)
         {
             return Result<Guid>.Failure(new NotFoundException("The provided subItem is invalid. subItem cannot be null."));
         }
 
-        if (subItem.Uid == Guid.Empty)
+        if (workItem.Uid == Guid.Empty)
         {
             return Result<Guid>.Failure(new NotFoundException("The provided subItem is invalid. Guid cannot be empty."));
         }
 
-        return subItems.Contains(subItem.Uid) ?
-            Result<Guid>.Success(subItem.Uid)
+        return workItems.Any(item => item.Uid == workItem.Uid) ?
+            Result<Guid>.Success(workItem.Uid)
             : Result<Guid>.Failure(new NotFoundException("The provided subItem does not exist in the list."));
     }
 }
