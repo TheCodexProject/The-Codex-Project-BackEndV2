@@ -1,5 +1,4 @@
-﻿using domain.models;
-using domain.models.board;
+﻿using domain.models.board;
 using domain.models.board.values;
 using domain.models.iteration;
 using domain.models.milestone;
@@ -27,8 +26,6 @@ public class EfcDbContext : DbContext
     public DbSet<Board> Boards { get; set; }
     public DbSet<FilterCriteria> FilterCriteria { get; set; }
     public DbSet<OrderByCriteria> OrderByCriteria { get; set; }
-
-
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
