@@ -1,7 +1,7 @@
 ﻿namespace domain.exceptions.models.resource.Format;
 
 /// <summary>
-/// Exception for when a Documentation format is too short.
+/// An exception that is thrown when the format of a resource is too long.
 /// </summary>
 public class ResourceFormatTooShortException : Exception
 {
