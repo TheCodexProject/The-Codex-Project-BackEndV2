@@ -2,7 +2,7 @@ using domain.models.project;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace EntityFrameworkCore.Configs;
+namespace EntityFrameworkCore.configs;
 
 public class ProjectConfiguration : IEntityTypeConfiguration<Project>
 {

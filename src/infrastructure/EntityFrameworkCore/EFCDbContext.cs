@@ -8,7 +8,7 @@ using domain.models.project;
 using domain.models.user;
 using domain.models.workitem;
 using domain.models.workspace;
-using EntityFrameworkCore.Configs;
+using EntityFrameworkCore.configs;
 using Microsoft.EntityFrameworkCore;
 
 namespace EntityFrameworkCore;

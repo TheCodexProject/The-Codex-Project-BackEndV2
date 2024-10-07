@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace EntityFrameworkCore.Configs;
+namespace EntityFrameworkCore.configs;
 
 public class MilestoneConfiguration : IEntityTypeConfiguration<Milestone>
 {
