@@ -54,7 +54,7 @@ public class Milestone
     /// <summary>
     /// Navigation property for the sub items of the WorkItem.
     /// </summary>
-    public List<WorkItem> WorkItems { get; private set; } = [];
+    public List<Guid> WorkItems { get; private set; } = [];
 
     #endregion
 
@@ -152,7 +152,7 @@ public class Milestone
 
         // * Add the sub item.
         // The sub item is not null, so we can safely add it.
-        WorkItems.Add(workItem);
+        WorkItems.Add(workItem.Uid);
 
         // ? Is modified by a user?
         if (modifiedBy == null) return Result.Success();
@@ -184,7 +184,7 @@ public class Milestone
 
         // * Remove the sub item.
         // The sub item is not null, so we can safely remove it.
-        WorkItems.Remove(subItem);
+        WorkItems.Remove(subItem.Uid);
 
         // ? Is modified by a user?
         if (modifiedBy == null) return Result.Success();

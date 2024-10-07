@@ -154,7 +154,7 @@ public class MilestoneTests
 
         // Assert
         Assert.True(result.IsSuccess);
-        Assert.Contains(workItem, milestone.WorkItems);
+        Assert.Contains(workItem.Uid, milestone.WorkItems);
     }
 
     // # 4A - Cannot add null work item
@@ -185,7 +185,7 @@ public class MilestoneTests
 
         // Assert
         Assert.True(result.IsSuccess);
-        Assert.DoesNotContain(workItem, milestone.WorkItems);
+        Assert.DoesNotContain(workItem.Uid, milestone.WorkItems);
     }
 
     // # 5A - Cannot remove a non-existent work item

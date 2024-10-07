@@ -13,7 +13,7 @@ public class WorkItem
     /// </summary>
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public Guid Uid { get; }
+    public Guid Uid { get; private set; }
 
     #region Metadata
 
