@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace domain.models;
+namespace domain.models.resource;
 
 public class Resource
 {

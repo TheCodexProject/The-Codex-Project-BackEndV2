@@ -1,4 +1,4 @@
-﻿using domain.models;
+﻿using domain.models.resource;
 using domain.models.board;
 using domain.models.board.values;
 using domain.models.iteration;
