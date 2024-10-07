@@ -12,6 +12,9 @@ public class Board
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public Guid Uid { get; private set; }
 
+    [ForeignKey("Project")]
+    public Guid ProjectUid { get; private set; }
+
     [MaxLength(75)]
     [MinLength(3)]
     [Required]
