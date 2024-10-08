@@ -1,14 +1,16 @@
 ﻿using domain.models.resource;
 using domain.models.board;
+﻿using domain.models.board;
 using domain.models.board.values;
 using domain.models.iteration;
 using domain.models.milestone;
 using domain.models.organisation;
 using domain.models.project;
+using domain.models.resource;
 using domain.models.user;
 using domain.models.workitem;
 using domain.models.workspace;
-using EntityFrameworkCore.Configs;
+using EntityFrameworkCore.configs;
 using Microsoft.EntityFrameworkCore;
 
 namespace EntityFrameworkCore;
@@ -26,8 +28,6 @@ public class EfcDbContext : DbContext
     public DbSet<Board> Boards { get; set; }
     public DbSet<FilterCriteria> FilterCriteria { get; set; }
     public DbSet<OrderByCriteria> OrderByCriteria { get; set; }
-
-
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -47,6 +47,7 @@ public class EfcDbContext : DbContext
         modelBuilder.ApplyConfiguration(new MilestoneConfiguration());
         modelBuilder.ApplyConfiguration(new IterationConfiguration());
         modelBuilder.ApplyConfiguration(new WorkspaceConfiguration());
+        modelBuilder.ApplyConfiguration(new ProjectConfiguration());
         base.OnModelCreating(modelBuilder);
     }
 }

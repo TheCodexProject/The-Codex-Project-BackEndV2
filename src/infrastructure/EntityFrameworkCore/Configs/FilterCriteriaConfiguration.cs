@@ -3,7 +3,7 @@ using domain.models.board.values;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace EntityFrameworkCore.Configs;
+namespace EntityFrameworkCore.configs;
 
 public class FilterCriteriaConfiguration : IEntityTypeConfiguration<FilterCriteria>
 {

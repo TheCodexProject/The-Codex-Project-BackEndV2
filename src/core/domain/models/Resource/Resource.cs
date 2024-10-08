@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using OperationResult;
 
 namespace domain.models.resource;
 
@@ -32,7 +33,8 @@ public class Resource
     /// Stores the content of the resource.
     /// </summary>
     [Required]
-    public string? Content { get; private set; }
+    [MaxLength(200)]
+    public string? Reference { get; private set; }
 
     /// <summary>
     /// The private constructor for the <see cref="Resource"/> class.
@@ -51,5 +53,46 @@ public class Resource
         return new Resource();
     }
 
-    // TODO: Add methods to update the resource's properties. (e.g. UpdateTitle, UpdateFormat, UpdateContent)
+    public Result UpdateTitle(string title)
+    {
+        var result = ResourceValidator.ValidateTitle(title);
+
+        if (result.IsFailure)
+        {
+            return Result.Failure(result.Errors.ToArray());
+        }
+
+        Title = title;
+
+        return Result.Success();
+    }
+
+    public Result UpdateFormat(string format)
+    {
+        var result = ResourceValidator.ValidateFormat(format);
+
+        if (result.IsFailure)
+        {
+            return Result.Failure(result.Errors.ToArray());
+        }
+
+        Format = format;
+
+        return Result.Success();
+    }
+
+    public Result UpdateReference(string reference)
+    {
+        var result = ResourceValidator.ValidateReference(reference);
+
+        if (result.IsFailure)
+        {
+            return Result.Failure(result.Errors.ToArray());
+        }
+
+        Reference = reference;
+
+        return Result.Success();
+    }
+
 }

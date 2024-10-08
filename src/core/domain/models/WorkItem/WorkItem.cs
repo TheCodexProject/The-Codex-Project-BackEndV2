@@ -13,7 +13,7 @@ public class WorkItem
     /// </summary>
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public Guid Uid { get; }
+    public Guid Uid { get; private set; }
 
     #region Metadata
 
@@ -87,6 +87,9 @@ public class WorkItem
     #endregion
 
     #region Relations
+
+    [ForeignKey("Project")]
+    public Guid ProjectUid { get; set; }
 
     /// <summary>
     /// The unique identifier of the parent WorkItem, if any.
