@@ -1,7 +1,7 @@
 ﻿using domain.models.milestone;
+using OperationResult;
 using domain.models.user;
 using domain.models.workitem;
-using Xunit;
 
 namespace UnitTests.models.milestone;
 
@@ -11,7 +11,7 @@ public class MilestoneTests
     [Fact]
     public void Milestone_can_be_created()
     {
-        // Arrange
+        // Arrangew
         var milestone = Milestone.Create();
 
         // Act

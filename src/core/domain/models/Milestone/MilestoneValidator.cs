@@ -1,10 +1,10 @@
 ﻿using domain.exceptions.common;
-using domain.exceptions.milestone.milestoneContent;
-using domain.exceptions.milestone.milestoneTitle;
+using domain.exceptions.models.milestone.milestonecontent;
+using domain.exceptions.models.milestone.milestonetitle;
 using domain.models.workitem;
 using OperationResult;
 
-namespace domain.models.Milestone;
+namespace domain.models.milestone;
 
 public class MilestoneValidator
 {
