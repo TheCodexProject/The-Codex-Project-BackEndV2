@@ -88,6 +88,9 @@ public class WorkItem
 
     #region Relations
 
+    [ForeignKey("Project")]
+    public Guid ProjectUid { get; set; }
+
     /// <summary>
     /// The unique identifier of the parent WorkItem, if any.
     /// </summary>
