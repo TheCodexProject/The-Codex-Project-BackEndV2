@@ -22,7 +22,8 @@
 
     <ItemGroup>
       <Folder Include="exceptions\models\Project\" />
-        <Folder Include="exceptions\models\Resource"/>
+        <Folder Include="exceptions\models\Resource\"/>
+        <Folder Include="exceptions\models\Milestone\" />
       <Folder Include="exceptions\models\User\" />
     </ItemGroup>
 
