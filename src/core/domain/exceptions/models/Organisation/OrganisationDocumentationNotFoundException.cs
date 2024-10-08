@@ -1,7 +1,8 @@
-using System.Runtime.Serialization;
+namespace domain.exceptions.models.organisation;
 
-namespace domain.exceptions.orgamodels.organisationnisation;
-
+/// <summary>
+/// Exception for when an documentation entity cannot be found.
+/// </summary>
 public class OrganisationDocumentationNotFoundException : Exception
 {
     /// <summary>

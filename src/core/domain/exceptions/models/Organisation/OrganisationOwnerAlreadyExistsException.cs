@@ -1,8 +1,8 @@
-using System.Runtime.Serialization;
-
 namespace domain.exceptions.models.organisation;
 
-[Serializable]
+/// <summary>
+/// Exception for when a someone tries to add an owner .
+/// </summary>
 public class OrganisationOwnerAlreadyExistsException : Exception
 {
     /// <summary>

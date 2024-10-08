@@ -1,7 +1,8 @@
-using System.Runtime.Serialization;
-
 namespace domain.exceptions.models.organisation;
 
+/// <summary>
+/// Exception for when an documentation entity is already created and cannot be created again.
+/// </summary>
 public class OrganisationDocumentationAlreadyExistsException : Exception
 {
     /// <summary>

@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using Xunit;
-using domain.models.organisation;
-using domain.models.user;
+﻿using domain.models.organisation;
 
 namespace UnitTests.models.organisation
 {
-    public class OrganisationTests
+    public class OrganisationModelTests
     {
         // # 1 - Create a new Organisation
         [Fact]

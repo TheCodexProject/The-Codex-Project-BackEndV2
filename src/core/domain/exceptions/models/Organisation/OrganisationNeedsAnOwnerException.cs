@@ -1,8 +1,8 @@
-using System.Runtime.Serialization;
-
 namespace domain.exceptions.models.organisation;
 
-[Serializable]
+/// <summary>
+/// Exception for when a someone tries to remove an owner from an organisation that only has 1 owner.
+/// </summary>
 public class OrganisationNeedsAnOwnerException : Exception
 {
     /// <summary>
