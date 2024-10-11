@@ -19,7 +19,7 @@ public class CreateBoardCommand
 
         if (workspaceTitleResult.IsSuccess)
         {
-            return Result<CreateBoardCommand>.Success(new CreateBoardCommand(title));
+            return Result<CreateBoardCommand>.Success(new CreateBoardCommand(title!));
         }
 
         List<Exception> errors = [];
