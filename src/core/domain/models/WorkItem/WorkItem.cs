@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using domain.models.resource;
 using domain.models.user;
 using domain.models.values;
 using OperationResult;
@@ -77,19 +78,20 @@ public class WorkItem
     /// The ID of the user that the work item is assigned to.
     /// </summary>
     [ForeignKey("AssignedTo")]
-    public Guid? AssignedToId { get; set; }
+    public Guid? AssignedToId { get; private set; }
 
     /// <summary>
     /// The user that the work item is assigned to.
+    /// (Lazy loaded)
     /// </summary>
-    public user.User? AssignedTo { get; set; }
+    public virtual User? AssignedTo { get; private set; }
 
     #endregion
 
     #region Relations
 
     [ForeignKey("ProjectUid")]
-    public Guid ProjectUid { get; set; }
+    public Guid ProjectUid { get; private set; }
 
     /// <summary>
     /// The unique identifier of the parent WorkItem, if any.
@@ -98,24 +100,28 @@ public class WorkItem
 
     /// <summary>
     /// Reference to the parent WorkItem, if any.
+    /// (Lazy loaded)
     /// </summary>
     [ForeignKey("ParentId")]
-    public WorkItem? Parent { get; set; }
+    public virtual WorkItem? Parent { get; private set; }
 
     /// <summary>
     /// Navigation property for the sub items of the WorkItem.
+    /// (Lazy loaded)
     /// </summary>
-    public List<WorkItem> SubItems { get; private set; } = [];
+    public virtual List<WorkItem> SubItems { get; private set; } = [];
 
     /// <summary>
     /// The unique identifiers of the resources that are attached to the work item.
+    /// (Lazy loaded)
     /// </summary>
-    public List<Guid> ResourcesIds { get; private set; } = [];
+    public virtual List<Resource> Resources { get; private set; } = [];
 
     /// <summary>
     /// The unique identifiers of the dependencies of the work item.
+    /// (Lazy loaded)
     /// </summary>
-    public List<Guid> DependenciesIds { get; private set; } = [];
+    public virtual List<WorkItem> Dependencies { get; private set; } = [];
 
     #endregion
 
@@ -331,7 +337,7 @@ public class WorkItem
     public Result AddSubItem(WorkItem? subItem, User? modifiedBy = null)
     {
         // ! Validate the sub item.
-        var result = WorkItemValidator.ValidateAddSubItem(subItem, SubItems.Select(x => x.Uid).ToList());
+        var result = WorkItemValidator.ValidateAddSubItem(subItem, SubItems);
 
         // ? Is the result a failure?
         if (result.IsFailure)
@@ -342,7 +348,7 @@ public class WorkItem
 
         // * Add the sub item.
         // The sub item is not null, so we can safely add it.
-        SubItems.Add(subItem);
+        SubItems.Add(result);
 
         // ? Is modified by a user?
         if (modifiedBy == null) return Result.Success();
@@ -363,7 +369,7 @@ public class WorkItem
     public Result RemoveSubItem(WorkItem? subItem, User? modifiedBy = null)
     {
         // ! Validate the sub item.
-        var result = WorkItemValidator.ValidateRemoveSubItem(subItem, SubItems.Select(x => x.Uid).ToList());
+        var result = WorkItemValidator.ValidateRemoveSubItem(subItem, SubItems);
 
         // ? Is the result a failure?
         if (result.IsFailure)
@@ -374,7 +380,7 @@ public class WorkItem
 
         // * Remove the sub item.
         // The sub item is not null, so we can safely remove it.
-        SubItems.Remove(subItem);
+        SubItems.Remove(result);
 
         // ? Is modified by a user?
         if (modifiedBy == null) return Result.Success();
@@ -389,13 +395,13 @@ public class WorkItem
     /// <summary>
     /// Adds a resource to the work item.
     /// </summary>
-    /// <param name="resourceId">Resource to be added.</param>
+    /// <param name="resource">Resource to be added.</param>
     /// <param name="modifiedBy">The user who made the update.</param>
     /// <returns></returns>
-    public Result AddResource(Guid resourceId, User? modifiedBy = null)
+    public Result AddResource(Resource? resource, User? modifiedBy = null)
     {
         // ! Validate the resource.
-        var result = WorkItemValidator.ValidateAddResource(resourceId, ResourcesIds);
+        var result = WorkItemValidator.ValidateAddResource(resource, Resources);
 
         // ? Is the result a failure?
         if (result.IsFailure)
@@ -405,7 +411,7 @@ public class WorkItem
         }
 
         // * Add the resource.
-        ResourcesIds.Add(resourceId);
+        Resources.Add(result);
 
         // ? Is modified by a user?
         if (modifiedBy == null) return Result.Success();
@@ -420,13 +426,13 @@ public class WorkItem
     /// <summary>
     /// Removes a resource from the work item.
     /// </summary>
-    /// <param name="resourceId">Resource to be removed.</param>
+    /// <param name="resource">Resource to be removed.</param>
     /// <param name="modifiedBy">The user who made the update.</param>
     /// <returns></returns>
-    public Result RemoveResource(Guid resourceId, User? modifiedBy = null)
+    public Result RemoveResource(Resource? resource, User? modifiedBy = null)
     {
         // ! Validate the resource.
-        var result = WorkItemValidator.ValidateRemoveResource(resourceId, ResourcesIds);
+        var result = WorkItemValidator.ValidateRemoveResource(resource, Resources);
 
         // ? Is the result a failure?
         if (result.IsFailure)
@@ -436,7 +442,7 @@ public class WorkItem
         }
 
         // * Remove the resource.
-        ResourcesIds.Remove(resourceId);
+        Resources.Remove(result);
 
         // ? Is modified by a user?
         if (modifiedBy == null) return Result.Success();
@@ -451,13 +457,13 @@ public class WorkItem
     /// <summary>
     /// Adds a dependency to the work item.
     /// </summary>
-    /// <param name="dependencyId">Dependency to be added.</param>
+    /// <param name="dependency">Dependency to be added.</param>
     /// <param name="modifiedBy">The user who made the update.</param>
     /// <returns></returns>
-    public Result AddDependency(Guid dependencyId, User? modifiedBy = null)
+    public Result AddDependency(WorkItem? dependency, User? modifiedBy = null)
     {
         // ! Validate the dependency.
-        var result = WorkItemValidator.ValidateAddDependency(dependencyId, DependenciesIds);
+        var result = WorkItemValidator.ValidateAddDependency(dependency, Dependencies);
 
         // ? Is the result a failure?
         if (result.IsFailure)
@@ -467,7 +473,7 @@ public class WorkItem
         }
 
         // * Add the dependency.
-        DependenciesIds.Add(dependencyId);
+        Dependencies.Add(result);
 
         // ? Is modified by a user?
         if (modifiedBy == null) return Result.Success();
@@ -482,13 +488,13 @@ public class WorkItem
     /// <summary>
     /// Removes a dependency from the work item.
     /// </summary>
-    /// <param name="dependencyId">Dependency to be removed.</param>
+    /// <param name="dependency">Dependency to be removed.</param>
     /// <param name="modifiedBy">The user who made the update.</param>
     /// <returns></returns>
-    public Result RemoveDependency(Guid dependencyId, User? modifiedBy = null)
+    public Result RemoveDependency(WorkItem? dependency, User? modifiedBy = null)
     {
         // ! Validate the dependency.
-        var result = WorkItemValidator.ValidateRemoveDependency(dependencyId, DependenciesIds);
+        var result = WorkItemValidator.ValidateRemoveDependency(dependency, Dependencies);
 
         // ? Is the result a failure?
         if (result.IsFailure)
@@ -498,7 +504,7 @@ public class WorkItem
         }
 
         // * Remove the dependency.
-        DependenciesIds.Remove(dependencyId);
+        Dependencies.Remove(result);
 
         // ? Is modified by a user?
         if (modifiedBy == null) return Result.Success();
@@ -509,7 +515,4 @@ public class WorkItem
 
         return Result.Success();
     }
-
-
-
 }
