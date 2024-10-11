@@ -1,5 +1,6 @@
 ﻿using domain.exceptions.models.Workspace;
 using domain.models.project;
+using domain.models.resource;
 using domain.models.user;
 using domain.models.workspace;
 using domain.models.workspace.values;
@@ -147,7 +148,7 @@ public class WorkspaceModelTests
     {
         // Arrange
         var workspace = Workspace.Create();
-        var contact = Guid.NewGuid();
+        var contact = User.Create();
 
         // Act
         workspace.AddContact(contact);
@@ -162,7 +163,7 @@ public class WorkspaceModelTests
     {
         // Arrange
         var workspace = Workspace.Create();
-        var contact = Guid.NewGuid();
+        var contact = User.Create();
         workspace.AddContact(contact);
 
         // Act
@@ -178,7 +179,7 @@ public class WorkspaceModelTests
     {
         // Arrange
         var workspace = Workspace.Create();
-        var resource = Guid.NewGuid();
+        var resource = Resource.Create();
 
         // Act
         workspace.AddResource(resource);
@@ -193,7 +194,7 @@ public class WorkspaceModelTests
     {
         // Arrange
         var workspace = Workspace.Create();
-        var resource = Guid.NewGuid();
+        var resource = Resource.Create();
         workspace.AddResource(resource);
 
         // Act

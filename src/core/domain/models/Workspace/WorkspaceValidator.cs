@@ -1,5 +1,8 @@
 ﻿using domain.exceptions.common;
 using domain.exceptions.models.Workspace;
+using domain.models.project;
+using domain.models.resource;
+using domain.models.user;
 using domain.models.workspace.values;
 using OperationResult;
 
@@ -46,21 +49,28 @@ public static class WorkspaceValidator
     /// <param name="project">Project to validate.</param>
     /// <param name="projects">List of projects to validate against.</param>
     /// <returns>A <see cref="Result"/> indicating if the title is valid or not.</returns>
-    public static Result<Guid> ValidateAddProject(Guid project, List<Guid> projects)
+    public static Result<Project> ValidateAddProject(Project? project, List<Project> projects)
     {
         // ? Is the project null or empty?
-        if (project == Guid.Empty)
+        if (project == null)
         {
             // ! Return a failure.
-            return Result<Guid>.Failure(new NotFoundException("The provided project is invalid. Guid cannot be empty."));
+            return Result<Project>.Failure(new NotFoundException("The provided project is invalid. Cannot be null."));
+        }
+
+        // ? Is the project's Uid null or empty?
+        if (project.Uid == Guid.Empty)
+        {
+            // ! Return a failure.
+            return Result<Project>.Failure(new NotFoundException("The provided project is invalid. Uid cannot be empty."));
         }
 
         // ? Is the project already in the list?
         return projects.Contains(project) ?
             // ! Return a failure.
-            Result<Guid>.Failure(new AlreadyExistsException("The provided project already exists in the list."))
+            Result<Project>.Failure(new AlreadyExistsException("The provided project already exists in the list."))
             : // * Return a success.
-            Result<Guid>.Success(project);
+            Result<Project>.Success(project);
     }
 
     /// <summary>
@@ -69,21 +79,28 @@ public static class WorkspaceValidator
     /// <param name="project">Project to validate.</param>
     /// <param name="projects">List of projects to validate against.</param>
     /// <returns>A <see cref="Result"/> indicating if the title is valid or not.</returns>
-    public static Result<Guid> ValidateRemoveProject(Guid project, List<Guid> projects)
+    public static Result<Project> ValidateRemoveProject(Project? project, List<Project> projects)
     {
         // ? Is the project null or empty?
-        if (project == Guid.Empty)
+        if (project == null)
         {
             // ! Return a failure.
-            return Result<Guid>.Failure(new NotFoundException("The provided project is invalid. Guid cannot be empty."));
+            return Result<Project>.Failure(new NotFoundException("The provided project is invalid. Cannot be null."));
+        }
+
+        // ? Is the project null or empty?
+        if (project.Uid == Guid.Empty)
+        {
+            // ! Return a failure.
+            return Result<Project>.Failure(new NotFoundException("The provided project is invalid. Uid cannot be empty."));
         }
 
         // ? Is the project already in the list?
         return projects.Contains(project) ?
             // * Return a success.
-            Result<Guid>.Success(project)
+            Result<Project>.Success(project)
             : // ! Return a failure.
-            Result<Guid>.Failure(new NotFoundException("The provided project does not exist in the list."));
+            Result<Project>.Failure(new NotFoundException("The provided project does not exist in the list."));
     }
 
     /// <summary>
@@ -92,16 +109,24 @@ public static class WorkspaceValidator
     /// <param name="contact">Contact to validate.</param>
     /// <param name="contacts">List of contacts to validate against.</param>
     /// <returns></returns>
-    public static Result<Guid> ValidateAddContact(Guid contact, List<Guid> contacts)
+    public static Result<User> ValidateAddContact(User? contact, List<User> contacts)
     {
-        if (contact == Guid.Empty)
+        // ? Is the contact null or empty?
+        if (contact == null)
         {
-            return Result<Guid>.Failure(new NotFoundException("The provided contact is invalid. Guid cannot be empty."));
+            return Result<User>.Failure(new NotFoundException("The provided contact is invalid. Cannot be null."));
         }
 
+        // ? Is the contact's Uid null or empty?
+        if (contact.Uid == Guid.Empty)
+        {
+            return Result<User>.Failure(new NotFoundException("The provided contact is invalid. Guid cannot be empty."));
+        }
+
+        // ? Is the contact already in the list?
         return contacts.Contains(contact) ?
-            Result<Guid>.Failure(new AlreadyExistsException("The provided contact already exists in the list."))
-            : Result<Guid>.Success(contact);
+            Result<User>.Failure(new AlreadyExistsException("The provided contact already exists in the list."))
+            : Result<User>.Success(contact);
     }
 
     /// <summary>
@@ -110,16 +135,24 @@ public static class WorkspaceValidator
     /// <param name="contact">Contact to validate.</param>
     /// <param name="contacts">List of contacts to validate against.</param>
     /// <returns></returns>
-    public static Result<Guid> ValidateRemoveContact(Guid contact, List<Guid> contacts)
+    public static Result<User> ValidateRemoveContact(User? contact, List<User> contacts)
     {
-        if (contact == Guid.Empty)
+        // ? Is the contact null or empty?
+        if (contact == null)
         {
-            return Result<Guid>.Failure(new NotFoundException("The provided contact is invalid. Guid cannot be empty."));
+            return Result<User>.Failure(new NotFoundException("The provided contact is invalid. Cannot be null."));
         }
 
+        // ? Is the contact's Uid null or empty?
+        if (contact.Uid == Guid.Empty)
+        {
+            return Result<User>.Failure(new NotFoundException("The provided contact is invalid. Uid cannot be empty."));
+        }
+
+        // ? Is the contact already in the list?
         return contacts.Contains(contact) ?
-            Result<Guid>.Success(contact)
-            : Result<Guid>.Failure(new NotFoundException("The provided contact does not exist in the list."));
+            Result<User>.Success(contact)
+            : Result<User>.Failure(new NotFoundException("The provided contact does not exist in the list."));
     }
 
     /// <summary>
@@ -128,16 +161,24 @@ public static class WorkspaceValidator
     /// <param name="resource">Resource to validate.</param>
     /// <param name="resources">List of resources to validate against.</param>
     /// <returns></returns>
-    public static Result<Guid> ValidateAddResource(Guid resource, List<Guid> resources)
+    public static Result<Resource> ValidateAddResource(Resource? resource, List<Resource> resources)
     {
-        if (resource == Guid.Empty)
+        // ? Is the resource null or empty?
+        if (resource == null)
         {
-            return Result<Guid>.Failure(new NotFoundException("The provided resource is invalid. Guid cannot be empty."));
+            return Result<Resource>.Failure(new NotFoundException("The provided resource is invalid. Cannot be null."));
         }
 
+        // ? Is the resource's Uid null or empty?
+        if (resource.Uid == Guid.Empty)
+        {
+            return Result<Resource>.Failure(new NotFoundException("The provided resource is invalid. Uid cannot be empty."));
+        }
+
+        // ? Is the resource already in the list?
         return resources.Contains(resource) ?
-            Result<Guid>.Failure(new AlreadyExistsException("The provided resource already exists in the list."))
-            : Result<Guid>.Success(resource);
+            Result<Resource>.Failure(new AlreadyExistsException("The provided resource already exists in the list."))
+            : Result<Resource>.Success(resource);
     }
 
     /// <summary>
@@ -146,16 +187,24 @@ public static class WorkspaceValidator
     /// <param name="resource">Resource to validate</param>
     /// <param name="resources">List of resources to validate against.</param>
     /// <returns></returns>
-    public static Result<Guid> ValidateRemoveResource(Guid resource, List<Guid> resources)
+    public static Result<Resource> ValidateRemoveResource(Resource? resource, List<Resource> resources)
     {
-        if (resource == Guid.Empty)
+        // ? Is the resource null or empty?
+        if (resource == null)
         {
-            return Result<Guid>.Failure(new NotFoundException("The provided resource is invalid. Guid cannot be empty."));
+            return Result<Resource>.Failure(new NotFoundException("The provided resource is invalid. Cannot be null."));
         }
 
+        // ? Is the resource's Uid null or empty?
+        if (resource.Uid == Guid.Empty)
+        {
+            return Result<Resource>.Failure(new NotFoundException("The provided resource is invalid. Uid cannot be empty."));
+        }
+
+        // ? Is the resource already in the list?
         return resources.Contains(resource) ?
-            Result<Guid>.Success(resource)
-            : Result<Guid>.Failure(new NotFoundException("The provided resource does not exist in the list."));
+            Result<Resource>.Success(resource)
+            : Result<Resource>.Failure(new NotFoundException("The provided resource does not exist in the list."));
     }
 
     /// <summary>

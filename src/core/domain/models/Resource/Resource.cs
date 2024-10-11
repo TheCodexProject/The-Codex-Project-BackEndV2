@@ -13,6 +13,8 @@ public class Resource
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public Guid Uid { get; private set; }
 
+    #region Fields
+
     /// <summary>
     /// Title of the resource.
     /// </summary>
@@ -35,6 +37,18 @@ public class Resource
     [Required]
     [MaxLength(200)]
     public string? Reference { get; private set; }
+
+    #endregion
+
+    #region Relations
+
+    /// <summary>
+    /// A reference to the Workspace that owns this resource.
+    /// </summary>
+    [ForeignKey("WorkspaceUid")]
+    public Guid WorkspaceUid { get; private set; }
+
+    #endregion
 
     /// <summary>
     /// The private constructor for the <see cref="Resource"/> class.

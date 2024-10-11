@@ -33,7 +33,7 @@ public class EfcDbContext : DbContext
     {
         if (!optionsBuilder.IsConfigured)
         {
-            optionsBuilder.UseSqlite("Data Source=Db.db");
+            optionsBuilder.UseSqlite("Data Source=localdb.db");
         }
     }
 

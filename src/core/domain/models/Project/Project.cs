@@ -6,6 +6,7 @@ using domain.models.milestone;
 using domain.models.project.values;
 using domain.models.values;
 using domain.models.workitem;
+using domain.models.workspace;
 using OperationResult;
 
 namespace domain.models.project;
@@ -18,6 +19,8 @@ public class Project
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public Guid Uid  { get; private set; }
+
+    #region Fields
 
     /// <summary>
     /// The title of the project.
@@ -57,8 +60,20 @@ public class Project
     /// The priority of the project.
     /// </summary>
     public Priority? Priority { get; private set; }
+    #endregion
 
     #region Relations
+
+    /// <summary>
+    /// A reference to the Workspace that owns this project.
+    /// </summary>
+    [ForeignKey("WorkspaceUid")]
+    public Guid WorkspaceUid { get; private set; }
+
+    /// <summary>
+    /// Reference to the Workspace that owns this project.
+    /// </summary>
+    public Workspace Workspace { get; private set; }
 
     /// <summary>
     /// The work items of the project.
