@@ -20,13 +20,20 @@ public class Milestone
     [Required]
     public string? Title { get; private set; }
 
-    public List<Guid> WorkItems { get; private set; } = [];
+    public virtual List<WorkItem> WorkItems { get; private set; } = [];
 
+    /// <summary>
+    /// Private constructor for the <see cref="Milestone"/> class.
+    /// </summary>
     private Milestone()
     {
         Uid = Guid.NewGuid();
     }
 
+    /// <summary>
+    /// Constructor for the <see cref="Milestone"/> class.
+    /// </summary>
+    /// <returns></returns>
     public static Milestone Create()
     {
         // ! No validation needed here
@@ -62,42 +69,15 @@ public class Milestone
     }
 
     /// <summary>
-    /// Updates the content of the milestone.
-    /// </summary>
-    /// <param name="content">Content to be set.</param>
-    /// <param name="modifiedBy">The user who made the update.</param>
-    /// <returns></returns>
-    public Result UpdateContent(string title, User? modifiedBy = null)
-    {
-        // ! Validate the title.
-        var result = MilestoneValidator.ValidateContent(title);
-
-        // ? Is the result a failure?
-        if (result.IsFailure)
-        {
-            // ! Return the failure.
-            return Result.Failure(result.Errors.ToArray());
-        }
-
-        // * Update the title.
-        Title = title;
-
-        // ? Is modified by a user?
-        if (modifiedBy == null) return Result.Success();
-
-        return Result.Success();
-    }
-
-    /// <summary>
     /// Adds a work item to the milestone.
     /// </summary>
     /// <param name="subItem">Work item to be added.</param>
     /// <param name="modifiedBy">The user who made the update.</param>
     /// <returns></returns>
-    public Result AddSubItem(WorkItem? workItem, User? modifiedBy = null)
+    public Result AddSubItem(WorkItem? subItem, User? modifiedBy = null)
     {
         // ! Validate the sub item.
-        var result = MilestoneValidator.ValidateAddWorkItem(workItem, WorkItems);
+        var result = MilestoneValidator.ValidateAddWorkItem(subItem, WorkItems);
 
         // ? Is the result a failure?
         if (result.IsFailure)
@@ -108,7 +88,7 @@ public class Milestone
 
         // * Add the sub item.
         // The sub item is not null, so we can safely add it.
-        WorkItems.Add(workItem.Uid);
+        WorkItems.Add(result);
 
         // ? Is modified by a user?
         if (modifiedBy == null) return Result.Success();
@@ -136,7 +116,7 @@ public class Milestone
 
         // * Remove the sub item.
         // The sub item is not null, so we can safely remove it.
-        WorkItems.Remove(subItem.Uid);
+        WorkItems.Remove(result);
 
         // ? Is modified by a user?
         if (modifiedBy == null) return Result.Success();

@@ -11,7 +11,7 @@ public class MilestoneTests
     [Fact]
     public void Milestone_can_be_created()
     {
-        // Arrangew
+        // Arrange
         var milestone = Milestone.Create();
 
         // Act
@@ -103,42 +103,6 @@ public class MilestoneTests
 
     #endregion
 
-    #region Milestone Content Tests
-
-    // # 3 - Update the content of the milestone
-    [Fact]
-    public void Milestone_can_update_content()
-    {
-        // Arrange
-        var milestone = Milestone.Create();
-        var content = "This is the content of the milestone.";
-
-        // Act
-        var result = milestone.UpdateContent(content);
-
-        // Assert
-        Assert.True(result.IsSuccess);
-    }
-
-    // # 3A - Content cannot be null or empty
-    [Theory]
-    [InlineData("")]
-    [InlineData(" ")]
-    [InlineData(null)]
-    public void Milestone_cannot_update_content_with_invalid_value(string content)
-    {
-        // Arrange
-        var milestone = Milestone.Create();
-
-        // Act
-        var result = milestone.UpdateContent(content);
-
-        // Assert
-        Assert.True(result.IsFailure);
-    }
-
-    #endregion
-
     #region Milestone WorkItems Tests
 
     // # 4 - Add a work item to the milestone
@@ -154,7 +118,7 @@ public class MilestoneTests
 
         // Assert
         Assert.True(result.IsSuccess);
-        Assert.Contains(workItem.Uid, milestone.WorkItems);
+        Assert.Contains(workItem, milestone.WorkItems);
     }
 
     // # 4A - Cannot add null work item
@@ -185,7 +149,7 @@ public class MilestoneTests
 
         // Assert
         Assert.True(result.IsSuccess);
-        Assert.DoesNotContain(workItem.Uid, milestone.WorkItems);
+        Assert.DoesNotContain(workItem, milestone.WorkItems);
     }
 
     // # 5A - Cannot remove a non-existent work item
