@@ -1,6 +1,7 @@
 ﻿using domain.exceptions.common;
-using domain.exceptions.models.WorkItem.Description;
-using domain.exceptions.models.WorkItem.Title;
+using domain.exceptions.models.workitem.description;
+using domain.exceptions.models.workitem.title;
+using domain.models.resource;
 using domain.models.user;
 using domain.models.values;
 using domain.models.workitem;
@@ -186,7 +187,6 @@ public class WorkItemModelTests
 
     #endregion
 
-
     // # 4 - Status updates using the UpdateStatus method
     [Theory]
     [InlineData(Status.None)]
@@ -276,7 +276,7 @@ public class WorkItemModelTests
 
     #region WorkItem Subitems Tests
 
-    // # 8 - SubItems updates using the AddSubItem method
+    // # 8 - SubItems updates using the AddWorkItem method
     [Fact]
     public void WorkItem_can_add_subitem_success()
     {
@@ -323,7 +323,7 @@ public class WorkItemModelTests
         Assert.Contains(result.Errors, x => x is AlreadyExistsException);
     }
 
-    // # 9 - SubItems updates using the RemoveSubItem method
+    // # 9 - SubItems updates using the RemoveWorkItem method
     [Fact]
     public void WorkItem_can_remove_subitem_success()
     {
@@ -380,13 +380,13 @@ public class WorkItemModelTests
     {
         // Arrange
         var workItem = WorkItem.Create();
-        var resource = Guid.NewGuid();
+        var resource = Resource.Create();
 
         // Act
         workItem.AddResource(resource);
 
         // Assert
-        Assert.Contains(resource, workItem.ResourcesIds);
+        Assert.Contains(resource, workItem.Resources);
     }
 
     // # 10A - Resources can not be null
@@ -397,7 +397,7 @@ public class WorkItemModelTests
         var workItem = WorkItem.Create();
 
         // Act
-        var result = workItem.AddResource(Guid.Empty);
+        var result = workItem.AddResource(null);
 
         // Assert
         Assert.True(result.IsFailure);
@@ -410,7 +410,7 @@ public class WorkItemModelTests
     {
         // Arrange
         var workItem = WorkItem.Create();
-        var resource = Guid.NewGuid();
+        var resource = Resource.Create();
 
         // Act
         workItem.AddResource(resource);
@@ -427,14 +427,14 @@ public class WorkItemModelTests
     {
         // Arrange
         var workItem = WorkItem.Create();
-        var resource = Guid.NewGuid();
+        var resource = Resource.Create();
 
         // Act
         workItem.AddResource(resource);
         workItem.RemoveResource(resource);
 
         // Assert
-        Assert.DoesNotContain(resource, workItem.ResourcesIds);
+        Assert.DoesNotContain(resource, workItem.Resources);
     }
 
     // # 11A - Resources can not be null
@@ -445,7 +445,7 @@ public class WorkItemModelTests
         var workItem = WorkItem.Create();
 
         // Act
-        var result = workItem.RemoveResource(Guid.Empty);
+        var result = workItem.RemoveResource(null);
 
         // Assert
         Assert.True(result.IsFailure);
@@ -458,7 +458,7 @@ public class WorkItemModelTests
     {
         // Arrange
         var workItem = WorkItem.Create();
-        var resource = Guid.NewGuid();
+        var resource = Resource.Create();
 
         // Act
         var result = workItem.RemoveResource(resource);
@@ -481,10 +481,10 @@ public class WorkItemModelTests
         var dependency = WorkItem.Create();
 
         // Act
-        workItem.AddDependency(dependency.Uid);
+        workItem.AddDependency(dependency);
 
         // Assert
-        Assert.Contains(dependency.Uid, workItem.DependenciesIds);
+        Assert.Contains(dependency, workItem.Dependencies);
     }
 
     // # 12A - Dependencies can not be null
@@ -495,7 +495,7 @@ public class WorkItemModelTests
         var workItem = WorkItem.Create();
 
         // Act
-        var result = workItem.AddDependency(Guid.Empty);
+        var result = workItem.AddDependency(null);
 
         // Assert
         Assert.True(result.IsFailure);
@@ -511,8 +511,8 @@ public class WorkItemModelTests
         var dependency = WorkItem.Create();
 
         // Act
-        workItem.AddDependency(dependency.Uid);
-        var result = workItem.AddDependency(dependency.Uid);
+        workItem.AddDependency(dependency);
+        var result = workItem.AddDependency(dependency);
 
         // Assert
         Assert.True(result.IsFailure);
@@ -528,11 +528,11 @@ public class WorkItemModelTests
         var dependency = WorkItem.Create();
 
         // Act
-        workItem.AddDependency(dependency.Uid);
-        workItem.RemoveDependency(dependency.Uid);
+        workItem.AddDependency(dependency);
+        workItem.RemoveDependency(dependency);
 
         // Assert
-        Assert.DoesNotContain(dependency.Uid, workItem.DependenciesIds);
+        Assert.DoesNotContain(dependency, workItem.Dependencies);
     }
 
     // # 13A - Dependencies can not be null
@@ -543,7 +543,7 @@ public class WorkItemModelTests
         var workItem = WorkItem.Create();
 
         // Act
-        var result = workItem.RemoveDependency(Guid.Empty);
+        var result = workItem.RemoveDependency(null);
 
         // Assert
         Assert.True(result.IsFailure);
@@ -559,7 +559,7 @@ public class WorkItemModelTests
         var dependency = WorkItem.Create();
 
         // Act
-        var result = workItem.RemoveDependency(dependency.Uid);
+        var result = workItem.RemoveDependency(dependency);
 
         // Assert
         Assert.True(result.IsFailure);

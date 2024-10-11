@@ -1,8 +1,12 @@
-﻿namespace domain.exceptions.models.user.FirstName;
+﻿namespace domain.exceptions.models.user.firstname;
 
+/// <summary>
+/// An exception for when a first name contains extra spaces.
+/// </summary>
 public class FirstNameExtraSpacesException : Exception
 {
+    /// <summary>
+    /// Default message.
+    /// </summary>
     public FirstNameExtraSpacesException() : base("Your first name can not contain extra spaces. Please remove the extra spaces and try again." ) { }
-
-    public FirstNameExtraSpacesException(string message) : base(message) { }
 }

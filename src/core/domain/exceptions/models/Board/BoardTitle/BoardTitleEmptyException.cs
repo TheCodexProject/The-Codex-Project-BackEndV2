@@ -1,4 +1,4 @@
-﻿namespace domain.exceptions.models.board.boardTitle;
+﻿namespace domain.exceptions.models.board.boardtitle;
 
 /// <summary>
 /// Exception for when a Board is created without a title.

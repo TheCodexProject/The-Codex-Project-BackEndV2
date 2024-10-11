@@ -1,16 +1,13 @@
-using System.Runtime.Serialization;
+namespace domain.exceptions.models.user.email;
 
-namespace domain.exceptions.models.user.Email;
-
-[Serializable]
+/// <summary>
+/// An exception for when a user is created without an email.
+/// </summary>
 public class EmailEmptyException : Exception
 {
+    /// <summary>
+    /// Default message.
+    /// </summary>
     public EmailEmptyException() : base("Email is empty, please provide an email.") { }
-    
-    public EmailEmptyException(string message) : base(message) { }
-    
-    public EmailEmptyException(string message, Exception innerException) : base(message, innerException) { }
-    
-    protected EmailEmptyException(SerializationInfo info, StreamingContext context) : base(info, context) { }
-    
+
 }

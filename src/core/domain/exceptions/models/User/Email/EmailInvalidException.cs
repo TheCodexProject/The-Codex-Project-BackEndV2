@@ -1,16 +1,12 @@
-using System.Runtime.Serialization;
+namespace domain.exceptions.models.user.email;
 
-namespace domain.exceptions.models.user.Email;
-
-[Serializable]
+/// <summary>
+/// An exception for when an email is invalid.
+/// </summary>
 public class EmailInvalidException : Exception
 {
+    /// <summary>
+    /// Default message.
+    /// </summary>
     public EmailInvalidException() : base("Email is invalid, please provide a valid email.") { }
-    
-    public EmailInvalidException(string message) : base(message) { }
-    
-    public EmailInvalidException(string message, Exception innerException) : base(message, innerException) { }
-    
-    protected EmailInvalidException(SerializationInfo info, StreamingContext context) : base(info, context) { }
-    
 }

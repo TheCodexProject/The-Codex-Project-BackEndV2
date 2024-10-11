@@ -1,4 +1,5 @@
 ﻿using domain.models;
+using domain.models.resource;
 using domain.models.workitem;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -14,47 +15,31 @@ public class WorkItemConfiguration : IEntityTypeConfiguration<WorkItem>
     /// <param name="builder"></param>
     public void Configure(EntityTypeBuilder<WorkItem> builder)
     {
-        // # ASSIGNEE
+        // * Many-to-one: Work Item (Many) to Users (1)
         builder
             .HasOne(w => w.AssignedTo)
             .WithMany() // Assuming a User can have multiple WorkItems assigned
             .HasForeignKey(w => w.AssignedToId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        // # SUB-ITEMS
+        // * Many-to-one: SubItems (Many) to Work Item (1)
         builder
             .HasOne(w => w.Parent)
             .WithMany(w => w.SubItems)
             .HasForeignKey(w => w.ParentId)
             .OnDelete(DeleteBehavior.Restrict); // You can use Cascade or Restrict depending on your requirements
 
-        // # GuidListComparer (Used for the Resources and Dependencies)
-        var guidListComparer = new ValueComparer<List<Guid>>(
-            (c1, c2) => c1.SequenceEqual(c2), // Compare sequences for equality
-            c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())), // Calculate a hash code for the list
-            c => c.ToList() // Deep copy the list to avoid reference issues
-        );
-
-
-        // # Resources
+        // * Many-to-many: Work Item (Many) to (Many) Resources
         builder
-            .Property(w => w.ResourcesIds)
-            .HasConversion(
-                v => string.Join(',', v),
-                v => v.Split(',', StringSplitOptions.RemoveEmptyEntries)
-                    .Select(Guid.Parse)
-                    .ToList())
-            .Metadata.SetValueComparer(guidListComparer);
+            .HasMany(w => w.Resources)
+            .WithMany()
+            .UsingEntity(j => j.ToTable("WorkItemResources"));
 
-        // # Dependencies
+        // * Many-to-many: Work Item (Many) to (Many) Dependencies
         builder
-            .Property(w => w.DependenciesIds)
-            .HasConversion(
-                v => string.Join(',', v),
-                v => v.Split(',', StringSplitOptions.RemoveEmptyEntries)
-                    .Select(Guid.Parse)
-                    .ToList())
-            .Metadata.SetValueComparer(guidListComparer);
+            .HasMany(w => w.Dependencies)
+            .WithMany()
+            .UsingEntity(j => j.ToTable("WorkItemDependencies"));
     }
     
 }

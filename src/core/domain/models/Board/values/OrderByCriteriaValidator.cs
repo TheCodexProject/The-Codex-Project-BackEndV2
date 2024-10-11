@@ -1,5 +1,5 @@
 ﻿using domain.exceptions.common;
-using domain.exceptions.models.board.orderByCriteria;
+using domain.exceptions.models.board.orderbycriteria;
 using OperationResult;
 using System;
 using System.Collections.Generic;
