@@ -46,19 +46,19 @@ public class Workspace
 
     /// <summary>
     /// The list of projects within the Workspace.
-    /// (Owned by the Workspace)
+    /// (Lazy Loaded)
     /// </summary>
     public virtual List<Project> Projects { get; private set; } = [];
 
     /// <summary>
     /// The list of resources for this Workspace.
-    /// (Owned by the Workspace)
+    /// (Lazy Loaded)
     /// </summary>
     public virtual List<Resource> Resources { get; private set; } = [];
 
     /// <summary>
     /// The list of contacts for this Workspace.
-    /// (Referenced by the Workspace)
+    /// (Lazy Loaded)
     /// </summary>
     public virtual List<User> Contacts { get; private set; } = [];
 
