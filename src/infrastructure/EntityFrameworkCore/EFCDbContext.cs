@@ -1,12 +1,10 @@
 ﻿using domain.models.resource;
 using domain.models.board;
-﻿using domain.models.board;
 using domain.models.board.values;
 using domain.models.iteration;
 using domain.models.milestone;
 using domain.models.organization;
 using domain.models.project;
-using domain.models.resource;
 using domain.models.user;
 using domain.models.workitem;
 using domain.models.workspace;
