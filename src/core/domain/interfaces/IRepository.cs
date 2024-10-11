@@ -1,4 +1,7 @@
 ﻿using System.Linq.Expressions;
+using domain.models.user;
+using domain.models.workspace;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace domain.interfaces;
 
@@ -7,39 +10,32 @@ public interface IRepository<T> where T : class
     /// <summary>
     /// A method to get all entities from the repository.
     /// </summary>
-    /// <returns>All objects of type T stored in database.</returns>
+    /// <returns>All objects of type T stored in a database.</returns>
     Task<IEnumerable<T>> GetAllAsync();
-
-    /// <summary>
-    /// A method to find entities based on a predicate.
-    /// </summary>
-    /// <param name="predicate">Filter to follow.</param>
-    /// <returns>An object of type T</returns>
-    Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate);
 
     /// <summary>
     /// A method to get an entity by its unique identifier.
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="uid"></param>
     /// <returns>An object of type T</returns>
-    Task<T> GetByIdAsync(int id);
+    Task<T?> GetByIdAsync(Guid uid);
 
     /// <summary>
-    /// A method to add an entity to the repository.
+    /// A method to add an toAdd to the repository.
     /// </summary>
-    /// <param name="entity">An object of type T</param>
+    /// <param name="toAdd">An object of type T</param>
     /// <returns></returns>
-    Task AddAsync(T entity);
+    Task AddAsync(T toAdd);
 
     /// <summary>
-    /// A method to update an entity in the repository.
+    /// A method to update an toUpdate in the repository.
     /// </summary>
-    /// <param name="entity"></param>
-    void Update(T entity);
+    /// <param name="toUpdate"></param>
+    void Update(T toUpdate);
 
     /// <summary>
-    /// A method to delete an entity from the repository.
+    /// A method to delete an toRemove from the repository.
     /// </summary>
-    /// <param name="entity">An object of type T</param>
-    void Delete(T entity);
+    /// <param name="toRemove">An object of type T</param>
+    void Remove(T toRemove);
 }

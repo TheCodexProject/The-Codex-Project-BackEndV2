@@ -1,5 +1,6 @@
 
 using application.Extensions;
+using EntityFrameworkCore.extensions;
 using EntityFrameworkCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -20,14 +21,13 @@ builder.Services.AddControllers();
 builder.Services.RegisterCommandHandlers();
 builder.Services.RegisterCommandDispatcher();
 
-// ! DB Context
+// ! DB setup.
 builder.Services.AddDbContext<DbContext, EfcDbContext>();
-
-// TODO: Register all repositories here.
+builder.Services.RegisterRepositories();
+builder.Services.RegisterUnitOfWork();
 
 
 var app = builder.Build();
-
 
 app.MapControllers();
 
