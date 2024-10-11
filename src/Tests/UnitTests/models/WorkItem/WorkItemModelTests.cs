@@ -276,7 +276,7 @@ public class WorkItemModelTests
 
     #region WorkItem Subitems Tests
 
-    // # 8 - SubItems updates using the AddSubItem method
+    // # 8 - SubItems updates using the AddWorkItem method
     [Fact]
     public void WorkItem_can_add_subitem_success()
     {
@@ -323,7 +323,7 @@ public class WorkItemModelTests
         Assert.Contains(result.Errors, x => x is AlreadyExistsException);
     }
 
-    // # 9 - SubItems updates using the RemoveSubItem method
+    // # 9 - SubItems updates using the RemoveWorkItem method
     [Fact]
     public void WorkItem_can_remove_subitem_success()
     {

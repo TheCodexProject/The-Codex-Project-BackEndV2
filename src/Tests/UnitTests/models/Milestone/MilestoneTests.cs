@@ -114,7 +114,7 @@ public class MilestoneTests
         var workItem = WorkItem.Create();
 
         // Act
-        var result = milestone.AddSubItem(workItem);
+        var result = milestone.AddWorkItem(workItem);
 
         // Assert
         Assert.True(result.IsSuccess);
@@ -129,7 +129,7 @@ public class MilestoneTests
         var milestone = Milestone.Create();
 
         // Act
-        var result = milestone.AddSubItem(null);
+        var result = milestone.AddWorkItem(null);
 
         // Assert
         Assert.True(result.IsFailure);
@@ -142,10 +142,10 @@ public class MilestoneTests
         // Arrange
         var milestone = Milestone.Create();
         var workItem = WorkItem.Create();
-        milestone.AddSubItem(workItem);
+        milestone.AddWorkItem(workItem);
 
         // Act
-        var result = milestone.RemoveSubItem(workItem);
+        var result = milestone.RemoveWorkItem(workItem);
 
         // Assert
         Assert.True(result.IsSuccess);
@@ -161,7 +161,7 @@ public class MilestoneTests
         var workItem = WorkItem.Create();
 
         // Act
-        var result = milestone.RemoveSubItem(workItem);
+        var result = milestone.RemoveWorkItem(workItem);
 
         // Assert
         Assert.True(result.IsFailure);

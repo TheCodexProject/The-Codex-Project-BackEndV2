@@ -71,13 +71,13 @@ public class Milestone
     /// <summary>
     /// Adds a work item to the milestone.
     /// </summary>
-    /// <param name="subItem">Work item to be added.</param>
+    /// <param name="workItem">Work item to be added.</param>
     /// <param name="modifiedBy">The user who made the update.</param>
     /// <returns></returns>
-    public Result AddSubItem(WorkItem? subItem, User? modifiedBy = null)
+    public Result AddWorkItem(WorkItem? workItem, User? modifiedBy = null)
     {
         // ! Validate the sub item.
-        var result = MilestoneValidator.ValidateAddWorkItem(subItem, WorkItems);
+        var result = MilestoneValidator.ValidateAddWorkItem(workItem, WorkItems);
 
         // ? Is the result a failure?
         if (result.IsFailure)
@@ -99,13 +99,13 @@ public class Milestone
     /// <summary>
     /// Removes a work item from the milestone.
     /// </summary>
-    /// <param name="subItem">Work item to be removed.</param>
+    /// <param name="workItem">Work item to be removed.</param>
     /// <param name="modifiedBy">The user who made the update.</param>
     /// <returns></returns>
-    public Result RemoveSubItem(WorkItem? subItem, User? modifiedBy = null)
+    public Result RemoveWorkItem(WorkItem? workItem, User? modifiedBy = null)
     {
         // ! Validate the sub item.
-        var result = MilestoneValidator.ValidateRemoveWorkItem(subItem, WorkItems);
+        var result = MilestoneValidator.ValidateRemoveWorkItem(workItem, WorkItems);
 
         // ? Is the result a failure?
         if (result.IsFailure)

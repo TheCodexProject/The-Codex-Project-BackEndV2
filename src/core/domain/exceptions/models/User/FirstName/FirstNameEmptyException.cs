@@ -1,4 +1,4 @@
-namespace domain.exceptions.models.user.FirstName;
+namespace domain.exceptions.models.user.firstname;
 
 /// <summary>
 /// An exception for when a user is created without a first name.

@@ -1,4 +1,4 @@
-namespace domain.exceptions.models.user.LastName;
+namespace domain.exceptions.models.user.lastname;
 
 /// <summary>
 /// An exception for when a user's last name is too long.

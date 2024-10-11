@@ -1,7 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using domain.exceptions.models.user.email;
-using domain.exceptions.models.user.FirstName;
-using domain.exceptions.models.user.LastName;
+using domain.exceptions.models.user.firstname;
+using domain.exceptions.models.user.lastname;
 using OperationResult;
 
 namespace domain.models.user;
