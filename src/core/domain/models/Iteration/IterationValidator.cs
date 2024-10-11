@@ -1,5 +1,6 @@
 ﻿using domain.exceptions.common;
 using domain.exceptions.models.iteration.iterationTitle;
+using domain.models.workitem;
 using OperationResult;
 
 namespace domain.models.iteration;
@@ -41,18 +42,24 @@ public static class IterationValidator
     /// <param name="workItem">Work item to validate.</param>
     /// <param name="workItems">List of work items to validate against.</param>
     /// <returns>A <see cref="Result"/> indicating if the work item is valid or not.</returns>
-    public static Result<Guid> ValidateAddWorkItem(Guid workItem, List<Guid> workItems)
+    public static Result<WorkItem> ValidateAddWorkItem(WorkItem? workItem, List<WorkItem> workItems)
     {
         // ? Is the work item null or empty?
-        if (workItem == Guid.Empty)
+        if (workItem == null)
         {
-            return Result<Guid>.Failure(new NotFoundException("The provided work item is invalid. Guid cannot be empty."));
+            return Result<WorkItem>.Failure(new NotFoundException("The provided work item is invalid. Guid cannot be empty."));
+        }
+
+        // ? Is the work item null or empty?
+        if (workItem.Uid == Guid.Empty)
+        {
+            return Result<WorkItem>.Failure(new NotFoundException("The provided work item is invalid. Guid cannot be empty."));
         }
 
         // ? Is the work item already in the list?
         return workItems.Contains(workItem) ?
-            Result<Guid>.Failure(new AlreadyExistsException("The provided work item already exists in the list."))
-            : Result<Guid>.Success(workItem);
+            Result<WorkItem>.Failure(new AlreadyExistsException("The provided work item already exists in the list."))
+            : Result<WorkItem>.Success(workItem);
     }
 
     /// <summary>
@@ -61,17 +68,23 @@ public static class IterationValidator
     /// <param name="workItem">Work item to validate.</param>
     /// <param name="workItems">List of work items to validate against.</param>
     /// <returns>A <see cref="Result"/> indicating if the work item is valid or not.</returns>
-    public static Result<Guid> ValidateRemoveWorkItem(Guid workItem, List<Guid> workItems)
+    public static Result<WorkItem> ValidateRemoveWorkItem(WorkItem? workItem, List<WorkItem> workItems)
     {
         // ? Is the work item null or empty?
-        if (workItem == Guid.Empty)
+        if (workItem == null)
         {
-            return Result<Guid>.Failure(new NotFoundException("The provided work item is invalid. Guid cannot be empty."));
+            return Result<WorkItem>.Failure(new NotFoundException("The provided work item is invalid. Guid cannot be empty."));
+        }
+
+        // ? Is the work item null or empty?
+        if (workItem.Uid == Guid.Empty)
+        {
+            return Result<WorkItem>.Failure(new NotFoundException("The provided work item is invalid. Guid cannot be empty."));
         }
 
         // ? Does the work item exist in the list?
         return workItems.Contains(workItem) ?
-            Result<Guid>.Success(workItem)
-            : Result<Guid>.Failure(new NotFoundException("The provided work item does not exist in the list."));
+            Result<WorkItem>.Success(workItem)
+            : Result<WorkItem>.Failure(new NotFoundException("The provided work item does not exist in the list."));
     }
 }

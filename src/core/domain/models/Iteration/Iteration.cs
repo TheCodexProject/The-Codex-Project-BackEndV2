@@ -1,6 +1,7 @@
 ﻿using OperationResult;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using domain.models.workitem;
 
 namespace domain.models.iteration;
 
@@ -18,7 +19,7 @@ public class Iteration
     [Required]
     public string? Title { get; private set; }
 
-    public List<Guid> WorkItems { get; private set; } = [];
+    public virtual List<WorkItem> WorkItems { get; private set; } = [];
 
     /// <summary>
     /// Private constructor for the <see cref="Iteration"/> class to prevent direct instantiation.
@@ -64,7 +65,7 @@ public class Iteration
     /// </summary>
     /// <param name="workItem">The unique identifier of the work item to be added.</param>
     /// <returns>A <see cref="Result"/> indicating if the operation was successful or a failure.</returns>
-    public Result AddWorkItem(Guid workItem)
+    public Result AddWorkItem(WorkItem workItem)
     {
         // Validate the input.
         var result = IterationValidator.ValidateAddWorkItem(workItem, WorkItems);
@@ -76,7 +77,7 @@ public class Iteration
         }
 
         // Add the work item and return success.
-        WorkItems.Add(workItem);
+        WorkItems.Add(result);
         return Result.Success();
     }
 
@@ -85,7 +86,7 @@ public class Iteration
     /// </summary>
     /// <param name="workItem">The unique identifier of the work item to be removed.</param>
     /// <returns>A <see cref="Result"/> indicating if the operation was successful or a failure.</returns>
-    public Result RemoveWorkItem(Guid workItem)
+    public Result RemoveWorkItem(WorkItem workItem)
     {
         // Validate the input.
         var result = IterationValidator.ValidateRemoveWorkItem(workItem, WorkItems);
@@ -97,7 +98,7 @@ public class Iteration
         }
 
         // Remove the work item and return success.
-        WorkItems.Remove(workItem);
+        WorkItems.Remove(result);
         return Result.Success();
     }
 }
