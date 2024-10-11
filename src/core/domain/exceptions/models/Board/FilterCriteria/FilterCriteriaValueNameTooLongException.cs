@@ -1,5 +1,5 @@
 ﻿
-namespace domain.exceptions.models.board.filterCriteria;
+namespace domain.exceptions.models.board.filtercriteria;
 
 public class FilterCriteriaValueNameTooLongException : Exception
 {

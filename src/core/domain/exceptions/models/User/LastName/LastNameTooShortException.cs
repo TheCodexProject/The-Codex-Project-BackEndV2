@@ -1,15 +1,12 @@
-using System.Runtime.Serialization;
-
 namespace domain.exceptions.models.user.LastName;
 
-[Serializable]
+/// <summary>
+/// An exception for when a user's last name is too short.
+/// </summary>
 public class LastNameTooShortException : Exception
 {
+    /// <summary>
+    /// Default message.
+    /// </summary>
     public LastNameTooShortException() : base("Your last name is too short. Please enter at least 2 characters." ) { }
-    
-    public LastNameTooShortException(string message) : base(message) { }
-    
-    public LastNameTooShortException(string message, Exception innerException) : base(message, innerException) { }
-    
-    protected LastNameTooShortException(SerializationInfo info, StreamingContext context) : base(info, context) { }
 }

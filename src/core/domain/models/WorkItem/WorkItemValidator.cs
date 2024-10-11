@@ -1,6 +1,6 @@
 ﻿using domain.exceptions.common;
-using domain.exceptions.models.WorkItem.Description;
-using domain.exceptions.models.WorkItem.Title;
+using domain.exceptions.models.workitem.description;
+using domain.exceptions.models.workitem.title;
 using domain.models.resource;
 using domain.models.user;
 using domain.models.values;

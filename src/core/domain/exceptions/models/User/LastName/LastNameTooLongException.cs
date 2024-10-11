@@ -1,15 +1,12 @@
-using System.Runtime.Serialization;
-
 namespace domain.exceptions.models.user.LastName;
 
-[Serializable]
+/// <summary>
+/// An exception for when a user's last name is too long.
+/// </summary>
 public class LastNameTooLongException : Exception
 {
+    /// <summary>
+    /// Default message
+    /// </summary>
     public LastNameTooLongException() : base("Your last name is too long. Please enter a last name with no more than 60 characters." ) { }
-    
-    public LastNameTooLongException(string message) : base(message) { }
-    
-    public LastNameTooLongException(string message, Exception innerException) : base(message, innerException) { }
-    
-    protected LastNameTooLongException(SerializationInfo info, StreamingContext context) : base(info, context) { }
 }

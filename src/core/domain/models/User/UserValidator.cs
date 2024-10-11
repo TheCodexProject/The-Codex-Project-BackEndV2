@@ -1,5 +1,5 @@
 ﻿using System.Text.RegularExpressions;
-using domain.exceptions.models.user.Email;
+using domain.exceptions.models.user.email;
 using domain.exceptions.models.user.FirstName;
 using domain.exceptions.models.user.LastName;
 using OperationResult;

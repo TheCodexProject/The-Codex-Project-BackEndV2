@@ -1,4 +1,4 @@
-﻿using domain.exceptions.models.Workspace;
+﻿using domain.exceptions.models.workspace;
 using domain.models.project;
 using domain.models.resource;
 using domain.models.user;

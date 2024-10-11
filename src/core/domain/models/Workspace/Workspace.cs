@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using domain.exceptions.common;
-using domain.exceptions.models.Workspace;
+using domain.exceptions.models.workspace;
 using domain.models.project;
 using domain.models.resource;
 using domain.models.user;
