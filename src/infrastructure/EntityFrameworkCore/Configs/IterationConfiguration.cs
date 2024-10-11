@@ -1,5 +1,4 @@
 ﻿using domain.models.iteration;
-using domain.models.organisation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

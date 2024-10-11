@@ -27,7 +27,7 @@ public class Workspace
     public Guid Owner { get; private set; }
 
     /// <summary>
-    /// The type of the Owner. Either an Organisation or a User.
+    /// The type of the Owner. Either an Organization or a User.
     /// </summary>
     public OwnerType OwnerType { get; private set; }
 

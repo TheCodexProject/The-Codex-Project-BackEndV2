@@ -4,7 +4,7 @@ using domain.models.board;
 using domain.models.board.values;
 using domain.models.iteration;
 using domain.models.milestone;
-using domain.models.organisation;
+using domain.models.organization;
 using domain.models.project;
 using domain.models.resource;
 using domain.models.user;
@@ -22,7 +22,7 @@ public class EfcDbContext : DbContext
     public DbSet<WorkItem> WorkItems { get; set; }
     public DbSet<Resource> Resources { get; set; }
     public DbSet<Project> Projects { get; set; }
-    public DbSet<Organisation> Organisations { get; set; }
+    public DbSet<Organization> Organisations { get; set; }
     public DbSet<Milestone> Milestones { get; set; }
     public DbSet<Iteration> Iterations { get; set; }
     public DbSet<Board> Boards { get; set; }
@@ -41,7 +41,7 @@ public class EfcDbContext : DbContext
     {
         // Apply the Entity specific configurations.
         modelBuilder.ApplyConfiguration(new WorkItemConfiguration());
-        modelBuilder.ApplyConfiguration(new OrganisationConfiguration());
+        modelBuilder.ApplyConfiguration(new OrganizationConfiguration());
         modelBuilder.ApplyConfiguration(new OrderByCriteriaConfiguration());
         modelBuilder.ApplyConfiguration(new FilterCriteriaConfiguration());
         modelBuilder.ApplyConfiguration(new MilestoneConfiguration());

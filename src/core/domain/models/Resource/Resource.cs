@@ -48,6 +48,12 @@ public class Resource
     [ForeignKey("WorkspaceUid")]
     public Guid WorkspaceUid { get; private set; }
 
+    /// <summary>
+    /// A reference to the Organization that owns this resource.
+    /// </summary>
+    [ForeignKey("OrganizationUid")]
+    public Guid OrganizationUid { get; private set; }
+
     #endregion
 
     /// <summary>

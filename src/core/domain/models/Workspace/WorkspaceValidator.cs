@@ -223,7 +223,7 @@ public static class WorkspaceValidator
         // ? Is the owner type valid? (In enum)
         if (!Enum.IsDefined(typeof(OwnerType), ownerType))
         {
-            return Result.Failure(new NotFoundException("The provided owner type is invalid. Must be either User or Organisation."));
+            return Result.Failure(new NotFoundException("The provided owner type is invalid. Must be either User or Organization."));
         }
 
         return Result.Success();
