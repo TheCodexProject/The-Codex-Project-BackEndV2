@@ -13,7 +13,7 @@ public class BoardValidator
     /// </summary>
     /// <param name="title">Title to be validated.</param>
     /// <returns>A <see cref="Result"/> indicating if the title is valid or not.</returns>
-    public static Result<string> ValidateTitle(string title)
+    public static Result<string> ValidateTitle(string? title)
     {
         // Check if the title is null, empty, or whitespace.
         if (string.IsNullOrWhiteSpace(title))
