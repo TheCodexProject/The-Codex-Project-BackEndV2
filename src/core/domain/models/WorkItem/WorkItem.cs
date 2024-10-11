@@ -88,7 +88,7 @@ public class WorkItem
 
     #region Relations
 
-    [ForeignKey("Project")]
+    [ForeignKey("ProjectUid")]
     public Guid ProjectUid { get; set; }
 
     /// <summary>

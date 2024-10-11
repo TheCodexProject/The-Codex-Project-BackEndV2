@@ -10,7 +10,7 @@ public class Iteration
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public Guid Uid { get; private set; }
 
-    [ForeignKey("Project")]
+    [ForeignKey("ProjectUid")]
     public Guid ProjectUid { get; private set; }
 
     [MaxLength(75)]
