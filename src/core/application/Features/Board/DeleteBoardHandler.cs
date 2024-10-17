@@ -12,18 +12,23 @@ public class DeleteBoardHandler(IUnitOfWork unitOfWork) : ICommandHandler<Delete
 {
     public async Task<Result> HandleAsync(DeleteBoardCommand command)
     {
-        Guid id = command.id;
-        Board board = await unitOfWork.Boards.GetByIdAsync(id);
+        try
+        { 
+            Board board = await unitOfWork.Boards.GetByIdAsync(command.Id);
 
-        if (board == null)
-        {
-            return Result.Failure(new NotFoundException("Board not found."));
+            if (board == null)
+            {
+                return Result.Failure(new NotFoundException("Board not found."));
+            }
+
+            unitOfWork.Boards.Remove(board);
+            await unitOfWork.SaveChangesAsync();
+            return Result.Success();
         }
-
-
-
-
-        await repository.Delete(id);
-        return Result.Success();
+        catch (Exception ex)
+        {
+            // Log the exception as needed.
+            return Result.Failure(new ApplicationException("An error occurred while trying to delete the board.", ex));
+        }
     }
 }

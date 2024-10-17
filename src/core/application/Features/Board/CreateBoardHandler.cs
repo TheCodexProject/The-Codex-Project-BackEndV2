@@ -6,17 +6,25 @@ using domain.models.board;
 
 namespace application.features.board;
 
-public class CreateBoardHandler(IRepository<Board> repository) : ICommandHandler<CreateBoardCommand>
+public class CreateBoardHandler(IUnitOfWork unitOfWork) : ICommandHandler<CreateBoardCommand>
 {
     public async Task<Result> HandleAsync(CreateBoardCommand command)
     {
-        var board = Board.Create();
-        board.UpdateTitle(command.title);
+        try
+        {
+            var board = Board.Create();
+            board.UpdateTitle(command.title);
 
-        await repository.AddAsync(board);
+            await unitOfWork.Boards.AddAsync(board);
+            await unitOfWork.SaveChangesAsync();
 
-        command.Id = board.Uid;
+            command.Id = board.Uid;
 
-        return Result.Success();
+            return Result.Success();
+        }
+        catch (Exception ex)
+        {
+            return Result.Failure(new ApplicationException("An error occurred while creating the board.", ex));
+        }
     }
 }
