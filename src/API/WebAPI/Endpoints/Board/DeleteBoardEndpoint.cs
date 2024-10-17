@@ -12,7 +12,7 @@ public class DeleteBoardEndpoint(ICommandDispatcher dispatcher) : ApiEndpoint.Wi
     [HttpPost("workspace/{id}")]
     public override async Task<ActionResult> HandleAsync(DeleteBoardRequest request)
     {
-        Result<DeleteBoardCommand> cmdResult = DeleteBoardCommand.Create(Id: request.Id);
+        Result<DeleteBoardCommand> cmdResult = DeleteBoardCommand.Create(id: request.Id);
         if (cmdResult.IsFailure)
         {
             return BadRequest(cmdResult.Errors);

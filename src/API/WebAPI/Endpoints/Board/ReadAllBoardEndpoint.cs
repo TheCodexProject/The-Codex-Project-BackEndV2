@@ -1,5 +1,4 @@
 ﻿using application.appEntry.commands.board;
-using application.AppEntry.Commands.Board;
 using application.AppEntry.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using OperationResult;
@@ -30,7 +29,7 @@ public class ReadAllBoardEndpoint(ICommandDispatcher dispatcher) : ApiEndpoint.W
         // Convert Boards to BoardResponses
         List<BoardResponse> boardResponses = cmdResult.Value.Boards.Select(board => new BoardResponse
         {
-            Id = board.Id.ToString(),
+            Id = board.Uid.ToString(),
             Title = board.Title
         }).ToList();
 
