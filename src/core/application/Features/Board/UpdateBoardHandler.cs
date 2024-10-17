@@ -3,7 +3,6 @@ using application.appEntry.commands.board;
 using application.AppEntry.Interfaces;
 using domain.interfaces;
 using domain.models.board;
-using domain.models.project;
 using OperationResult;
 using domain.exceptions.common;
 

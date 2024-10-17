@@ -1,11 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using application.appEntry.commands.board;
+using application.AppEntry.Interfaces;
+using Microsoft.AspNetCore.Mvc;
+using OperationResult;
+using WebAPI.Endpoints.Common;
 
 namespace webAPI.endpoints.board;
 
-public interface DeleteBoardEndpoint
+public class DeleteBoardEndpoint(ICommandDispatcher dispatcher) : ApiEndpoint.WithRequest<DeleteBoardRequest>.WithoutResponse
 {
+    [HttpPost("workspace/{id}")]
+    public override async Task<ActionResult> HandleAsync(DeleteBoardRequest request)
+    {
+        Result<DeleteBoardCommand> cmdResult = DeleteBoardCommand.Create(Id: request.Id);
+        if (cmdResult.IsFailure)
+        {
+            return BadRequest(cmdResult.Errors);
+        }
+
+        Result result = await dispatcher.DispatchAsync(cmdResult.Value);
+
+        if (result.IsFailure)
+        {
+            return BadRequest(result.Errors);
+        }
+
+        return Ok();
+    }
+}
+
+public record DeleteBoardRequest
+{
+    [FromRoute] public required string Id { get; set; }
 }

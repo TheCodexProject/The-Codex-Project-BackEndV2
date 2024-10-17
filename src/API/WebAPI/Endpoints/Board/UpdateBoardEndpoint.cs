@@ -8,10 +8,10 @@ using WebAPI.Endpoints.Common;
 
 namespace webAPI.endpoints.board;
 
-public class UpdateBoardEndpoint(ICommandDispatcher dispatcher) : ApiEndpoint.WithRequest<UpdateBoardRequest>.WithResponse<Result>
+public class UpdateBoardEndpoint(ICommandDispatcher dispatcher) : ApiEndpoint.WithRequest<UpdateBoardRequest>.WithResponse<UpdateBoardResponse>
 {
     [HttpPost("workspace/{id}")]
-    public override async Task<ActionResult<Result>> HandleAsync(UpdateBoardRequest request)
+    public override async Task<ActionResult<UpdateBoardResponse>> HandleAsync(UpdateBoardRequest request)
     {
         Result<UpdateBoardCommand> cmdResult = UpdateBoardCommand.Create(Id: request.Id, Title: request.Title);
         if (cmdResult.IsFailure)
