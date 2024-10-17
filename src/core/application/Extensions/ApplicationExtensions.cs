@@ -1,3 +1,5 @@
+using application.AppEntry;
+using application.AppEntry.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace application.Extensions;
@@ -13,7 +15,6 @@ public static class ApplicationExtensions
 
     public static void RegisterCommandDispatcher(this IServiceCollection services)
     {
-        // TODO: Register command dispatcher here like this:
-        // services.AddScoped<ICommandDispatcher, CommandDispatcher>();
+        services.AddScoped<ICommandDispatcher, CommandDispatcher>();
     }
 }
