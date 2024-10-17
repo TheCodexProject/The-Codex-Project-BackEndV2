@@ -1,7 +1,7 @@
-﻿namespace domain.exceptions.models.Workspace;
+﻿namespace domain.exceptions.models.workspace;
 
 /// <summary>
-/// Exception for when a Workspace is created with a title that are too long.
+/// An exception for when a Workspace is created with a title that is too long.
 /// </summary>
 public class WorkspaceTitleTooLongException : Exception
 {
@@ -9,10 +9,4 @@ public class WorkspaceTitleTooLongException : Exception
     /// The default message.
     /// </summary>
     public WorkspaceTitleTooLongException() : base("Title cannot be more then 75 characters") { }
-
-    /// <summary>
-    /// Used for custom messages.
-    /// </summary>
-    /// <param name="message">Customized message.</param>
-    public WorkspaceTitleTooLongException(string message) : base(message) { }
 }

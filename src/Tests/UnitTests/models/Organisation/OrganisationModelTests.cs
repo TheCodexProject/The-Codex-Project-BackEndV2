@@ -1,15 +1,17 @@
-﻿using domain.models.organisation;
+﻿using domain.models.organization;
+using domain.models.resource;
+using domain.models.user;
 
 namespace UnitTests.models.organisation
 {
     public class OrganisationModelTests
     {
-        // # 1 - Create a new Organisation
+        // # 1 - Create a new Organization
         [Fact]
         public void Organisation_can_be_created()
         {
             // Arrange
-            var organisation = Organisation.Create();
+            var organisation = Organization.Create();
 
             // Act
 
@@ -17,14 +19,14 @@ namespace UnitTests.models.organisation
             Assert.NotNull(organisation);
         }
 
-        #region Organisation Name Tests
+        #region Organization Name Tests
 
         // # 2 - Update the name of the organisation
         [Fact]
         public void Organisation_can_update_name()
         {
             // Arrange
-            var organisation = Organisation.Create();
+            var organisation = Organization.Create();
             var name = "Tech Corp";
 
             // Act
@@ -42,7 +44,7 @@ namespace UnitTests.models.organisation
         public void Organisation_cannot_update_name_with_invalid_value(string name)
         {
             // Arrange
-            var organisation = Organisation.Create();
+            var organisation = Organization.Create();
 
             // Act
             var result = organisation.UpdateTitle(name);
@@ -57,7 +59,7 @@ namespace UnitTests.models.organisation
         public void Organisation_cannot_update_name_with_less_than_2_characters(string name)
         {
             // Arrange
-            var organisation = Organisation.Create();
+            var organisation = Organization.Create();
 
             // Act
             var result = organisation.UpdateTitle(name);
@@ -71,7 +73,7 @@ namespace UnitTests.models.organisation
         public void Organisation_cannot_update_name_with_more_than_100_characters()
         {
             // Arrange
-            var organisation = Organisation.Create();
+            var organisation = Organization.Create();
             var name = new string('A', 101);
 
             // Act
@@ -88,7 +90,7 @@ namespace UnitTests.models.organisation
         public void Organisation_can_update_name_with_valid_values(string name)
         {
             // Arrange
-            var organisation = Organisation.Create();
+            var organisation = Organization.Create();
 
             // Act
             var result = organisation.UpdateTitle(name);
@@ -99,15 +101,15 @@ namespace UnitTests.models.organisation
 
         #endregion
 
-        #region Organisation Owner Tests
+        #region Organization Owner Tests
 
         // # 3 - Add an owner to the organisation
         [Fact]
         public void Organisation_can_add_owner()
         {
             // Arrange
-            var organisation = Organisation.Create();
-            var owner = Guid.NewGuid();
+            var organisation = Organization.Create();
+            var owner = User.Create();
 
             // Act
             var result = organisation.AddOwner(owner);
@@ -122,8 +124,8 @@ namespace UnitTests.models.organisation
         public void Organisation_cannot_add_duplicate_owner()
         {
             // Arrange
-            var organisation = Organisation.Create();
-            var owner = Guid.NewGuid();
+            var organisation = Organization.Create();
+            var owner = User.Create();
             organisation.AddOwner(owner);
 
             // Act
@@ -138,8 +140,8 @@ namespace UnitTests.models.organisation
         public void Organisation_can_remove_owner()
         {
             // Arrange
-            var organisation = Organisation.Create();
-            var owner = Guid.NewGuid();
+            var organisation = Organization.Create();
+            var owner = User.Create();
             organisation.AddOwner(owner);
 
             // Act
@@ -155,8 +157,8 @@ namespace UnitTests.models.organisation
         public void Organisation_cannot_remove_nonexistent_owner()
         {
             // Arrange
-            var organisation = Organisation.Create();
-            var owner = Guid.NewGuid();
+            var organisation = Organization.Create();
+            var owner = User.Create();
 
             // Act
             var result = organisation.RemoveOwner(owner);
@@ -167,15 +169,15 @@ namespace UnitTests.models.organisation
 
         #endregion
 
-        #region Organisation Resource Tests
+        #region Organization Resource Tests
 
         // # 4 - Add a resource to the organisation
         [Fact]
         public void Organisation_can_add_resource()
         {
             // Arrange
-            var organisation = Organisation.Create();
-            var resource = Guid.NewGuid();
+            var organisation = Organization.Create();
+            var resource = Resource.Create();
 
             // Act
             var result = organisation.AddResource(resource);
@@ -190,8 +192,8 @@ namespace UnitTests.models.organisation
         public void Organisation_cannot_add_duplicate_resource()
         {
             // Arrange
-            var organisation = Organisation.Create();
-            var resource = Guid.NewGuid();
+            var organisation = Organization.Create();
+            var resource = Resource.Create();
             organisation.AddResource(resource);
 
             // Act
@@ -206,8 +208,8 @@ namespace UnitTests.models.organisation
         public void Organisation_can_remove_resource()
         {
             // Arrange
-            var organisation = Organisation.Create();
-            var resource = Guid.NewGuid();
+            var organisation = Organization.Create();
+            var resource = Resource.Create();
             organisation.AddResource(resource);
 
             // Act
@@ -223,8 +225,8 @@ namespace UnitTests.models.organisation
         public void Organisation_cannot_remove_nonexistent_resource()
         {
             // Arrange
-            var organisation = Organisation.Create();
-            var resource = Guid.NewGuid();
+            var organisation = Organization.Create();
+            var resource = Resource.Create();
 
             // Act
             var result = organisation.RemoveResource(resource);

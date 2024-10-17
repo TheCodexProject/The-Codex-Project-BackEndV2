@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using domain.exceptions.common;
-using domain.exceptions.models.Workspace;
+using domain.exceptions.models.workspace;
 using domain.models.project;
+using domain.models.resource;
+using domain.models.user;
 using domain.models.workspace.values;
 using OperationResult;
 
@@ -17,13 +19,15 @@ public class Workspace
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public Guid Uid { get; private set; }
 
+    #region  Fields
+
     /// <summary>
     /// The unique identifier for the Owner.
     /// </summary>
     public Guid Owner { get; private set; }
 
     /// <summary>
-    /// The type of the Owner. Either an Organisation or a User.
+    /// The type of the Owner. Either an Organization or a User.
     /// </summary>
     public OwnerType OwnerType { get; private set; }
 
@@ -35,20 +39,30 @@ public class Workspace
     [Required]
     public string? Title { get; private set; }
 
-    /// <summary>
-    /// The list of projects within the Workspace.
-    /// </summary>
-    public List<Guid> Projects { get; set; } = [];
+
+    #endregion
+
+    #region Relations
 
     /// <summary>
-    /// The list of contacts for this Workspace.
+    /// The list of projects within the Workspace.
+    /// (Lazy Loaded)
     /// </summary>
-    public List<Guid> Contacts { get; set; } = [];
+    public virtual List<Project> Projects { get; private set; } = [];
 
     /// <summary>
     /// The list of resources for this Workspace.
+    /// (Lazy Loaded)
     /// </summary>
-    public  List<Guid> Resources { get; set; } = [];
+    public virtual List<Resource> Resources { get; private set; } = [];
+
+    /// <summary>
+    /// The list of contacts for this Workspace.
+    /// (Lazy Loaded)
+    /// </summary>
+    public virtual List<User> Contacts { get; private set; } = [];
+
+    #endregion
 
     /// <summary>
     /// Private constructor for the <see cref="Workspace"/> class.
@@ -98,10 +112,10 @@ public class Workspace
     /// </summary>
     /// <param name="project">Project to be added.</param>
     /// <returns>A <see cref="Result"/> indicating if the title is valid or not.</returns>
-    public Result AddProject(Project project)
+    public Result AddProject(Project? project)
     {
         // ? Validate the project.
-        var result = WorkspaceValidator.ValidateAddProject(project.Uid, Projects);
+        var result = WorkspaceValidator.ValidateAddProject(project, Projects);
 
         // ? Was it a failure?
         if (result.IsFailure)
@@ -111,6 +125,7 @@ public class Workspace
         }
 
         // * Else we want to add the project.
+        // It is safe to assume that the result is not null.
         Projects.Add(result);
 
         // * Return a success.
@@ -122,10 +137,10 @@ public class Workspace
     /// </summary>
     /// <param name="project">Project to be removed.</param>
     /// <returns>A <see cref="Result"/> indicating if the title is valid or not.</returns>
-    public Result RemoveProject(Project project)
+    public Result RemoveProject(Project? project)
     {
         // ? Validate the project.
-        var result = WorkspaceValidator.ValidateRemoveProject(project.Uid, Projects);
+        var result = WorkspaceValidator.ValidateRemoveProject(project, Projects);
 
         // ? Was it a failure?
         if (result.IsFailure)
@@ -135,6 +150,7 @@ public class Workspace
         }
 
         // * Else we want to remove the project.
+        // It is safe to assume that the result is not null.
         Projects.Remove(result);
 
         // * Return a success.
@@ -146,15 +162,20 @@ public class Workspace
     /// </summary>
     /// <param name="contact">Contact to be added.</param>
     /// <returns></returns>
-    public Result AddContact(Guid contact)
+    public Result AddContact(User? contact)
     {
+        // ? Validate the contact.
         var result = WorkspaceValidator.ValidateAddContact(contact, Contacts);
 
+        // ? Was it a failure?
         if (result.IsFailure)
         {
+            // ! Return the errors.
             return Result.Failure(result.Errors.ToArray());
         }
 
+        // * Else we want to add the contact.
+        // It is safe to assume that the result is not null.
         Contacts.Add(result);
 
         return Result.Success();
@@ -165,16 +186,21 @@ public class Workspace
     /// </summary>
     /// <param name="contact"></param>
     /// <returns></returns>
-    public Result RemoveContact(Guid contact)
+    public Result RemoveContact(User? contact)
     {
+        // ? Validate the contact.
         var result = WorkspaceValidator.ValidateRemoveContact(contact, Contacts);
 
+        // ? Was it a failure?
         if (result.IsFailure)
         {
+            // ! Return the errors.
             return Result.Failure(result.Errors.ToArray());
         }
 
-        Contacts.Remove(contact);
+        // * Else we want to remove the contact.
+        // It is safe to assume that the result is not null.
+        Contacts.Remove(result);
 
         return Result.Success();
     }
@@ -184,15 +210,20 @@ public class Workspace
     /// </summary>
     /// <param name="resource">Resource to be added.</param>
     /// <returns></returns>
-    public Result AddResource(Guid resource)
+    public Result AddResource(Resource? resource)
     {
+        // ? Validate the resource.
         var result = WorkspaceValidator.ValidateAddResource(resource, Resources);
 
+        // ? Was it a failure?
         if (result.IsFailure)
         {
+            // ! Return the errors.
             return Result.Failure(result.Errors.ToArray());
         }
 
+        // * Else we want to add the resource.
+        // It is safe to assume that the result is not null.
         Resources.Add(result);
 
         return Result.Success();
@@ -203,16 +234,21 @@ public class Workspace
     /// </summary>
     /// <param name="resource">Resource to be removed.</param>
     /// <returns></returns>
-    public Result RemoveResource(Guid resource)
+    public Result RemoveResource(Resource? resource)
     {
+        // ? Validate the resource.
         var result = WorkspaceValidator.ValidateRemoveResource(resource, Resources);
 
+        // ? Was it a failure?
         if (result.IsFailure)
         {
+            // ! Return the errors.
             return Result.Failure(result.Errors.ToArray());
         }
 
-        Resources.Remove(resource);
+        // * Else we want to remove the resource.
+        // It is safe to assume that the result is not null.
+        Resources.Remove(result);
 
         return Result.Success();
     }
@@ -225,17 +261,20 @@ public class Workspace
     /// <returns></returns>
     public Result UpdateOwner(Guid owner, OwnerType ownerType)
     {
+        // ? Validate the owner.
         var result = WorkspaceValidator.ValidateOwner(owner, ownerType);
 
+        // ? Was it a failure?
         if (result.IsFailure)
         {
+            // ! Return the errors.
             return Result.Failure(result.Errors.ToArray());
         }
 
+        // * Else we want to update the owner.
         Owner = owner;
         OwnerType = ownerType;
 
         return Result.Success();
     }
-
 }

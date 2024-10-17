@@ -1,12 +1,10 @@
 ﻿using domain.models.resource;
 using domain.models.board;
-﻿using domain.models.board;
 using domain.models.board.values;
 using domain.models.iteration;
 using domain.models.milestone;
-using domain.models.organisation;
+using domain.models.organization;
 using domain.models.project;
-using domain.models.resource;
 using domain.models.user;
 using domain.models.workitem;
 using domain.models.workspace;
@@ -17,23 +15,23 @@ namespace EntityFrameworkCore;
 
 public class EfcDbContext : DbContext
 {
-    public DbSet<Workspace> Workspaces { get; set; }
-    public DbSet<User> Users { get; set; }
-    public DbSet<WorkItem> WorkItems { get; set; }
-    public DbSet<Resource> Resources { get; set; }
-    public DbSet<Project> Projects { get; set; }
-    public DbSet<Organisation> Organisations { get; set; }
-    public DbSet<Milestone> Milestones { get; set; }
-    public DbSet<Iteration> Iterations { get; set; }
-    public DbSet<Board> Boards { get; set; }
-    public DbSet<FilterCriteria> FilterCriteria { get; set; }
-    public DbSet<OrderByCriteria> OrderByCriteria { get; set; }
+    public DbSet<Workspace> Workspaces { get; init; }
+    public DbSet<User> Users { get; init; }
+    public DbSet<WorkItem> WorkItems { get; init; }
+    public DbSet<Resource> Resources { get; init; }
+    public DbSet<Project> Projects { get; init; }
+    public DbSet<Organization> Organisations { get; init; }
+    public DbSet<Milestone> Milestones { get; init; }
+    public DbSet<Iteration> Iterations { get; init; }
+    public DbSet<Board> Boards { get; init; }
+    public DbSet<FilterCriteria> FilterCriteria { get; init; }
+    public DbSet<OrderByCriteria> OrderByCriteria { get; init; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)
         {
-            optionsBuilder.UseSqlite("Data Source=Db.db");
+            optionsBuilder.UseSqlite("Data Source=localdb.db");
         }
     }
 
@@ -41,7 +39,7 @@ public class EfcDbContext : DbContext
     {
         // Apply the Entity specific configurations.
         modelBuilder.ApplyConfiguration(new WorkItemConfiguration());
-        modelBuilder.ApplyConfiguration(new OrganisationConfiguration());
+        modelBuilder.ApplyConfiguration(new OrganizationConfiguration());
         modelBuilder.ApplyConfiguration(new OrderByCriteriaConfiguration());
         modelBuilder.ApplyConfiguration(new FilterCriteriaConfiguration());
         modelBuilder.ApplyConfiguration(new MilestoneConfiguration());

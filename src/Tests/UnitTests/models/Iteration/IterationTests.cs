@@ -1,4 +1,5 @@
 ﻿using domain.models.iteration;
+using domain.models.workitem;
 
 namespace UnitTests.models.iteration;
 
@@ -83,7 +84,7 @@ public class IterationTests
     {
         // Arrange
         var iteration = Iteration.Create();
-        var workItem = Guid.NewGuid();
+        var workItem = WorkItem.Create();
 
         // Act
         var result = iteration.AddWorkItem(workItem);
@@ -94,25 +95,11 @@ public class IterationTests
     }
 
     [Fact]
-    public void AddWorkItem_ShouldFail_WhenWorkItemIsEmptyGuid()
-    {
-        // Arrange
-        var iteration = Iteration.Create();
-        var workItem = Guid.Empty;
-
-        // Act
-        var result = iteration.AddWorkItem(workItem);
-
-        // Assert
-        Assert.True(result.IsFailure);
-    }
-
-    [Fact]
     public void AddWorkItem_ShouldFail_WhenWorkItemAlreadyExists()
     {
         // Arrange
         var iteration = Iteration.Create();
-        var workItem = Guid.NewGuid();
+        var workItem = WorkItem.Create();
         iteration.AddWorkItem(workItem);
 
         // Act
@@ -127,7 +114,7 @@ public class IterationTests
     {
         // Arrange
         var iteration = Iteration.Create();
-        var workItem = Guid.NewGuid();
+        var workItem = WorkItem.Create();
         iteration.AddWorkItem(workItem);
 
         // Act
@@ -143,7 +130,7 @@ public class IterationTests
     {
         // Arrange
         var iteration = Iteration.Create();
-        var workItem = Guid.NewGuid();
+        var workItem = WorkItem.Create();
 
         // Act
         var result = iteration.RemoveWorkItem(workItem);
@@ -157,7 +144,7 @@ public class IterationTests
     {
         // Arrange
         var iteration = Iteration.Create();
-        var workItem = Guid.Empty;
+        var workItem = WorkItem.Create();
 
         // Act
         var result = iteration.RemoveWorkItem(workItem);

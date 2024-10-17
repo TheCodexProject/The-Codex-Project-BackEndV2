@@ -1,15 +1,12 @@
-using System.Runtime.Serialization;
+namespace domain.exceptions.models.workitem.title;
 
-namespace domain.exceptions.models.WorkItem.Title;
-
-[Serializable]
+/// <summary>
+/// An exception for when a WorkItem is created with a title that is too long.
+/// </summary>
 public class WorkItemTitleTooLongException : Exception
 {
+    /// <summary>
+    /// Default message.
+    /// </summary>
     public WorkItemTitleTooLongException() : base("Title is too long, it cannot be more than 75 characters.") { }
-    
-    public WorkItemTitleTooLongException(string message) : base(message) { }
-    
-    public WorkItemTitleTooLongException(string message, Exception innerException) : base(message, innerException) { }
-    
-    protected WorkItemTitleTooLongException(SerializationInfo info, StreamingContext context) : base(info, context) { }
 }

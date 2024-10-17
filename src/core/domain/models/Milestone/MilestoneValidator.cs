@@ -1,5 +1,4 @@
 ﻿using domain.exceptions.common;
-using domain.exceptions.models.milestone.milestonecontent;
 using domain.exceptions.models.milestone.milestonetitle;
 using domain.models.workitem;
 using OperationResult;
@@ -23,49 +22,37 @@ public class MilestoneValidator
         };
     }
 
-    public static Result<string> ValidateContent(string content)
-    {
-        if (string.IsNullOrWhiteSpace(content))
-        {
-            return Result<string>.Failure(new MilestoneContentEmptyException());
-        }
-        else
-        {
-            return Result<string>.Success(content);
-        }
-    }
-
-    public static Result<Guid> ValidateAddWorkItem(WorkItem? workItem, List<Guid> workItems)
+    public static Result<WorkItem> ValidateAddWorkItem(WorkItem? workItem, List<WorkItem> workItems)
     {
         if (workItem == null)
         {
-            return Result<Guid>.Failure(new NotFoundException("The provided subItem is invalid. subItem cannot be null."));
+            return Result<WorkItem>.Failure(new NotFoundException("The provided workItem is invalid. workItem cannot be null."));
         }
 
         if (workItem.Uid == Guid.Empty)
         {
-            return Result<Guid>.Failure(new NotFoundException("The provided subItem is invalid. Guid cannot be empty."));
+            return Result<WorkItem>.Failure(new NotFoundException("The provided workItem is invalid. Guid cannot be empty."));
         }
 
-        return workItems.Any(item => item == workItem.Uid) ?
-            Result<Guid>.Failure(new AlreadyExistsException("The provided subItem already exists in the list."))
-            : Result<Guid>.Success(workItem.Uid);
+        return workItems.Contains(workItem) ?
+            Result<WorkItem>.Failure(new AlreadyExistsException("The provided workItem already exists in the list."))
+            : Result<WorkItem>.Success(workItem);
     }
 
-    public static Result<Guid> ValidateRemoveWorkItem(WorkItem? workItem, List<Guid> workItems)
+    public static Result<WorkItem> ValidateRemoveWorkItem(WorkItem? workItem, List<WorkItem> workItems)
     {
         if (workItem == null)
         {
-            return Result<Guid>.Failure(new NotFoundException("The provided subItem is invalid. subItem cannot be null."));
+            return Result<WorkItem>.Failure(new NotFoundException("The provided workItem is invalid. workItem cannot be null."));
         }
 
         if (workItem.Uid == Guid.Empty)
         {
-            return Result<Guid>.Failure(new NotFoundException("The provided subItem is invalid. Guid cannot be empty."));
+            return Result<WorkItem>.Failure(new NotFoundException("The provided workItem is invalid. Guid cannot be empty."));
         }
 
-        return workItems.Any(item => item == workItem.Uid) ?
-            Result<Guid>.Success(workItem.Uid)
-            : Result<Guid>.Failure(new NotFoundException("The provided subItem does not exist in the list."));
+        return workItems.Contains(workItem) ?
+            Result<WorkItem>.Success(workItem)
+            : Result<WorkItem>.Failure(new NotFoundException("The provided workItem does not exist in the list."));
     }
 }

@@ -1,15 +1,12 @@
-﻿using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using domain.interfaces;
-using domain.models.Organisation;
+using domain.models.resource;
 using domain.models.user;
-using domain.models.workitem;
 using OperationResult;
 
-namespace domain.models.organisation;
+namespace domain.models.organization;
 
-public class Organisation
+public class Organization
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -51,25 +48,38 @@ public class Organisation
     #endregion
 
     #region Relations
-    public List<Guid> Owners { get; set; } = [];
 
-    public List<Guid> Resources { get; set; } = [];
+    /// <summary>
+    /// The owners of the organisation.
+    /// (Lazy loaded)
+    /// </summary>
+    public virtual List<User> Owners { get; private set; } = [];
+
+    /// <summary>
+    /// The resources of the organisation.
+    /// (Lazy loaded)
+    /// </summary>
+    public virtual List<Resource> Resources { get; private set; } = [];
 
     #endregion
 
     /// <summary>
-    /// Private constructor for the <see cref="Organisation"/> class.
+    /// Private constructor for the <see cref="Organization"/> class.
     /// </summary>
-    private Organisation()
+    private Organization()
     {
         Uid = Guid.NewGuid();
     }
 
-    public static Organisation Create()
+    /// <summary>
+    /// Constructor for the <see cref="Organization"/> class.
+    /// </summary>
+    /// <returns></returns>
+    public static Organization Create()
     {
         // ! No validation needed here
         // As the organisation is to be modified through the provided methods.
-        return new Organisation();
+        return new Organization();
     }
 
     /// <summary>
@@ -81,7 +91,7 @@ public class Organisation
     public Result UpdateTitle(string name, User? modifiedBy = null)
     {
         // ! Validate the title.
-        var result = OrganisationValidator.ValidateName(name);
+        var result = OrganizationValidator.ValidateName(name);
 
         // ? Is the result a failure?
         if (result.IsFailure)
@@ -109,10 +119,10 @@ public class Organisation
     /// <param name="owner">Owner to be added.</param>
     /// <param name="modifiedBy">The user who made the update.</param>
     /// <returns></returns>
-    public Result AddOwner(Guid owner, User? modifiedBy = null)
+    public Result AddOwner(User? owner, User? modifiedBy = null)
     {
         // ! Validate the owner.
-        var result = OrganisationValidator.ValidateAddOwner(owner, Owners);
+        var result = OrganizationValidator.ValidateAddOwner(owner, Owners);
 
         // ? Is the result a failure?
         if (result.IsFailure)
@@ -123,7 +133,7 @@ public class Organisation
 
         // * Add the owner.
         // The owner is not null, so we can safely add it.
-        Owners.Add(owner);
+        Owners.Add(result);
 
         // ? Is modified by a user?
         if (modifiedBy == null) return Result.Success();
@@ -141,10 +151,10 @@ public class Organisation
     /// <param name="owner">Owner to be added.</param>
     /// <param name="modifiedBy">The user who made the update.</param>
     /// <returns></returns>
-    public Result RemoveOwner(Guid owner, User? modifiedBy = null)
+    public Result RemoveOwner(User? owner, User? modifiedBy = null)
     {
         // ! Validate the Owner.
-        var result = OrganisationValidator.ValidateRemoveOwner(owner, Owners);
+        var result = OrganizationValidator.ValidateRemoveOwner(owner, Owners);
 
         // ? Is the result a failure?
         if (result.IsFailure)
@@ -155,7 +165,7 @@ public class Organisation
 
         // * Remove the Owner.
         // The Owner is not null, so we can safely remove it.
-        Owners.Remove(owner);
+        Owners.Remove(result);
 
         // ? Is modified by a user?
         if (modifiedBy == null) return Result.Success();
@@ -170,13 +180,13 @@ public class Organisation
     /// <summary>
     /// Adds a resource to the organisation.
     /// </summary>
-    /// <param name="owner">Resource to be added.</param>
+    /// <param name="resource">Resource to be added.</param>
     /// <param name="modifiedBy">The user who made the update.</param>
     /// <returns></returns>
-    public Result AddResource(Guid resource, User? modifiedBy = null)
+    public Result AddResource(Resource? resource, User? modifiedBy = null)
     {
         // ! Validate the resource.
-        var result = OrganisationValidator.ValidateAddResource(resource, Resources);
+        var result = OrganizationValidator.ValidateAddResource(resource, Resources);
 
         // ? Is the result a failure?
         if (result.IsFailure)
@@ -187,7 +197,7 @@ public class Organisation
 
         // * Add the resource.
         // The resource is not null, so we can safely add it.
-        Resources.Add(resource);
+        Resources.Add(result);
 
         // ? Is modified by a user?
         if (modifiedBy == null) return Result.Success();
@@ -205,10 +215,10 @@ public class Organisation
     /// <param name="resource">Resource to be added.</param>
     /// <param name="modifiedBy">The user who made the update.</param>
     /// <returns></returns>
-    public Result RemoveResource(Guid resource, User? modifiedBy = null)
+    public Result RemoveResource(Resource? resource, User? modifiedBy = null)
     {
         // ! Validate the resource.
-        var result = OrganisationValidator.ValidateRemoveResource(resource, Resources);
+        var result = OrganizationValidator.ValidateRemoveResource(resource, Resources);
 
         // ? Is the result a failure?
         if (result.IsFailure)
@@ -219,7 +229,7 @@ public class Organisation
 
         // * Remove the resource.
         // The resource is not null, so we can safely remove it.
-        Resources.Remove(resource);
+        Resources.Remove(result);
 
         // ? Is modified by a user?
         if (modifiedBy == null) return Result.Success();
@@ -230,5 +240,4 @@ public class Organisation
 
         return Result.Success();
     }
-    // TODO: Add methods to update the organisation. (e.g. UpdateName, AddOwner, RemoveOwner, AddResource, RemoveResource etc...)
 }

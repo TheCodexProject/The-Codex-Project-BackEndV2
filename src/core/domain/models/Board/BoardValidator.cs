@@ -1,6 +1,5 @@
 ﻿using domain.exceptions.common;
-using domain.exceptions.models.board.boardTitle;
-using domain.exceptions.models.Workspace;
+using domain.exceptions.models.board.boardtitle;
 using domain.models.board.values;
 using OperationResult;
 

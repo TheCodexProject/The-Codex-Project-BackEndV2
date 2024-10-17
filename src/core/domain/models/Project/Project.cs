@@ -6,6 +6,7 @@ using domain.models.milestone;
 using domain.models.project.values;
 using domain.models.values;
 using domain.models.workitem;
+using domain.models.workspace;
 using OperationResult;
 
 namespace domain.models.project;
@@ -18,6 +19,8 @@ public class Project
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public Guid Uid  { get; private set; }
+
+    #region Fields
 
     /// <summary>
     /// The title of the project.
@@ -57,37 +60,61 @@ public class Project
     /// The priority of the project.
     /// </summary>
     public Priority? Priority { get; private set; }
+    #endregion
 
     #region Relations
 
     /// <summary>
-    /// The work items of the project.
+    /// A reference to the Workspace that owns this project.
     /// </summary>
-    public List<WorkItem> WorkItems { get; private set; } = [];
+    [ForeignKey("WorkspaceUid")]
+    public Guid WorkspaceUid { get; private set; }
+
+    /// <summary>
+    /// Reference to the Workspace that owns this project.
+    /// (Lazy loaded)
+    /// </summary>
+    public virtual Workspace? Workspace { get; private set; }
+
+    /// <summary>
+    /// The work items of the project.
+    /// (Lazy loaded)
+    /// </summary>
+    public virtual List<WorkItem> WorkItems { get; private set; } = [];
 
     /// <summary>
     /// The milestones of the project.
+    /// (Lazy loaded)
     /// </summary>
-    public List<Milestone> Milestones { get; private set; } = [];
+    public virtual List<Milestone> Milestones { get; private set; } = [];
 
     /// <summary>
     /// The boards of the project.
+    /// (Lazy loaded)
     /// </summary>
-    public List<Board> Boards { get; private set; } = [];
+    public virtual List<Board> Boards { get; private set; } = [];
 
     /// <summary>
     /// The iterations of the project.
+    /// (Lazy loaded)
     /// </summary>
-    public List<Iteration> Iterations { get; private set; } = [];
+    public virtual List<Iteration> Iterations { get; private set; } = [];
 
     #endregion
 
+    /// <summary>
+    /// Private constructor for the <see cref="Project"/> class.
+    /// </summary>
     private Project()
     {
         // "Specific" values
         Uid = Guid.NewGuid();
     }
 
+    /// <summary>
+    /// Constructs a new instance of the <see cref="Project"/> class.
+    /// </summary>
+    /// <returns></returns>
     public static Project Create()
     {
         // ! No validation needed here
@@ -95,6 +122,11 @@ public class Project
         return new Project();
     }
 
+    /// <summary>
+    /// Updates the title of the Project
+    /// </summary>
+    /// <param name="title">The new title to be set.</param>
+    /// <returns>A <see cref="Result"/> indicating if the operation was success or a failure.</returns>
     public Result UpdateTitle(string title)
     {
         // ! Validate the title.
@@ -113,6 +145,11 @@ public class Project
         return Result.Success();
     }
 
+    /// <summary>
+    /// Updates the description of the Project.
+    /// </summary>
+    /// <param name="description">The new description to be set.</param>
+    /// <returns>A <see cref="Result"/> indicating if the operation was success or a failure.</returns>
     public Result UpdateDescription(string description)
     {
         // ! Validate the description.
@@ -131,6 +168,11 @@ public class Project
         return Result.Success();
     }
 
+    /// <summary>
+    /// Updates the status of the Project.
+    /// </summary>
+    /// <param name="status">The new status to be set.</param>
+    /// <returns>A <see cref="Result"/> indicating if the operation was success or a failure.</returns>
     public Result UpdateStatus(Status status)
     {
         // ! Validate the status.
@@ -149,6 +191,12 @@ public class Project
         return Result.Success();
     }
 
+    /// <summary>
+    /// Updates the time range of the Project.
+    /// </summary>
+    /// <param name="start">The new start date to be set.</param>
+    /// <param name="end">The new end date to be set.</param>
+    /// <returns>A <see cref="Result"/> indicating if the operation was success or a failure.</returns>
     public Result UpdateTimeRange(DateTime start, DateTime end)
     {
         // ! Validate the time range.
@@ -168,6 +216,11 @@ public class Project
         return Result.Success();
     }
 
+    /// <summary>
+    /// Updates the framework of the Project.
+    /// </summary>
+    /// <param name="framework">The new framework to be set.</param>
+    /// <returns>A <see cref="Result"/> indicating if the operation was success or a failure.</returns>
     public Result UpdateFramework(Framework framework)
     {
         // * Update the framework.
@@ -176,6 +229,11 @@ public class Project
         return Result.Success();
     }
 
+    /// <summary>
+    /// Updates the priority of the Project.
+    /// </summary>
+    /// <param name="priority">The new priority to be set.</param>
+    /// <returns>A <see cref="Result"/> indicating if the operation was success or a failure.</returns>
     public Result UpdatePriority(Priority priority)
     {
         // * Update the priority.
@@ -184,6 +242,11 @@ public class Project
         return Result.Success();
     }
 
+    /// <summary>
+    /// Adds a work item to the project.
+    /// </summary>
+    /// <param name="workItem">The work item to be added.</param>
+    /// <returns>A <see cref="Result"/> indicating if the operation was success or a failure.</returns>
     public Result AddWorkItem(WorkItem? workItem)
     {
         // ! Validate the work item.
@@ -198,11 +261,16 @@ public class Project
 
         // * Add the work item.
         // We are sure that the work item is not null, as the validation has passed.
-        WorkItems.Add(workItem);
+        WorkItems.Add(result);
 
         return Result.Success();
     }
 
+    /// <summary>
+    /// Removes a work item from the project.
+    /// </summary>
+    /// <param name="workItem">The work item to be removed.</param>
+    /// <returns>A <see cref="Result"/> indicating if the operation was success or a failure.</returns>
     public Result RemoveWorkItem(WorkItem? workItem)
     {
         // ! Validate the work item.
@@ -217,11 +285,16 @@ public class Project
 
         // * Remove the work item.
         // We are sure that the work item is not null, as the validation has passed.
-        WorkItems.Remove(workItem);
+        WorkItems.Remove(result);
 
         return Result.Success();
     }
 
+    /// <summary>
+    /// Adds a milestone to the project.
+    /// </summary>
+    /// <param name="milestone">The milestone to be added.</param>
+    /// <returns>A <see cref="Result"/> indicating if the operation was success or a failure.</returns>
     public Result AddMilestone(Milestone? milestone)
     {
         // ! Validate the milestone.
@@ -236,11 +309,16 @@ public class Project
 
         // * Add the milestone.
         // We are sure that the milestone is not null, as the validation has passed.
-        Milestones.Add(milestone);
+        Milestones.Add(result);
 
         return Result.Success();
     }
 
+    /// <summary>
+    /// Removes a milestone from the project.
+    /// </summary>
+    /// <param name="milestone">The milestone to be removed.</param>
+    /// <returns>A <see cref="Result"/> indicating if the operation was success or a failure.</returns>
     public Result RemoveMilestone(Milestone? milestone)
     {
         // ! Validate the milestone.
@@ -255,11 +333,16 @@ public class Project
 
         // * Remove the milestone.
         // We are sure that the milestone is not null, as the validation has passed.
-        Milestones.Remove(milestone);
+        Milestones.Remove(result);
 
         return Result.Success();
     }
 
+    /// <summary>
+    /// Adds a board to the project.
+    /// </summary>
+    /// <param name="board">The board to be added.</param>
+    /// <returns>A <see cref="Result"/> indicating if the operation was success or a failure.</returns>
     public Result AddBoard(Board? board)
     {
         // ! Validate the board.
@@ -274,11 +357,16 @@ public class Project
 
         // * Add the board.
         // We are sure that the board is not null, as the validation has passed.
-        Boards.Add(board);
+        Boards.Add(result);
 
         return Result.Success();
     }
 
+    /// <summary>
+    /// Removes a board from the project.
+    /// </summary>
+    /// <param name="board">The board to be removed.</param>
+    /// <returns>A <see cref="Result"/> indicating if the operation was success or a failure.</returns>
     public Result RemoveBoard(Board? board)
     {
         // ! Validate the board.
@@ -293,11 +381,16 @@ public class Project
 
         // * Remove the board.
         // We are sure that the board is not null, as the validation has passed.
-        Boards.Remove(board);
+        Boards.Remove(result);
 
         return Result.Success();
     }
 
+    /// <summary>
+    /// Adds an iteration to the project.
+    /// </summary>
+    /// <param name="iteration">The iteration to be added.</param>
+    /// <returns>A <see cref="Result"/> indicating if the operation was success or a failure.</returns>
     public Result AddIteration(Iteration? iteration)
     {
         // ! Validate the iteration.
@@ -312,11 +405,16 @@ public class Project
 
         // * Add the iteration.
         // We are sure that the iteration is not null, as the validation has passed.
-        Iterations.Add(iteration);
+        Iterations.Add(result);
 
         return Result.Success();
     }
 
+    /// <summary>
+    /// Removes an iteration from the project.
+    /// </summary>
+    /// <param name="iteration">The iteration to be removed.</param>
+    /// <returns>A <see cref="Result"/> indicating if the operation was success or a failure.</returns>
     public Result RemoveIteration(Iteration? iteration)
     {
         // ! Validate the iteration.
@@ -331,7 +429,7 @@ public class Project
 
         // * Remove the iteration.
         // We are sure that the iteration is not null, as the validation has passed.
-        Iterations.Remove(iteration);
+        Iterations.Remove(result);
 
         return Result.Success();
     }

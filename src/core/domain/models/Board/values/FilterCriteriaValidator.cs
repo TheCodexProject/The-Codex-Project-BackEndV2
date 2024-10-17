@@ -1,7 +1,7 @@
 ﻿
 
 using domain.exceptions.common;
-using domain.exceptions.models.board.filterCriteria;
+using domain.exceptions.models.board.filtercriteria;
 using OperationResult;
 
 namespace domain.models.board.values;

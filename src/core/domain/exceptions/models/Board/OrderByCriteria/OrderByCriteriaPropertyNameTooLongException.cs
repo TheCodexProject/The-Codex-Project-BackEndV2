@@ -1,5 +1,5 @@
 ﻿
-namespace domain.exceptions.models.board.orderByCriteria;
+namespace domain.exceptions.models.board.orderbycriteria;
 
 public class OrderByCriteriaPropertyNameTooLongException : Exception
 {

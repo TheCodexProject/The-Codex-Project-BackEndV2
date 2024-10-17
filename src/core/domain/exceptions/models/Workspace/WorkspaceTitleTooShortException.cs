@@ -1,7 +1,7 @@
-﻿namespace domain.exceptions.models.Workspace;
+﻿namespace domain.exceptions.models.workspace;
 
 /// <summary>
-/// Exception for when a workspace is created with a too short title
+/// An exception for when a Workspace is created with a title that is too short.
 /// </summary>
 public class WorkspaceTitleTooShortException : Exception
 {
@@ -9,10 +9,4 @@ public class WorkspaceTitleTooShortException : Exception
     /// The default message.
     /// </summary>
     public WorkspaceTitleTooShortException() : base("Title is too short, it must be more then 3 characters.") { }
-
-    /// <summary>
-    /// Used for custom messages.
-    /// </summary>
-    /// <param name="message">Customized message.</param>
-    public WorkspaceTitleTooShortException(string message) : base(message) { }
 }

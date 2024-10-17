@@ -1,15 +1,12 @@
-using System.Runtime.Serialization;
+namespace domain.exceptions.models.workitem.title;
 
-namespace domain.exceptions.models.WorkItem.Title;
-
-[Serializable]
+/// <summary>
+/// An exception for when a WorkItem is created with a title that is too short.
+/// </summary>
 public class WorkItemTitleTooShortException : Exception
 {
+    /// <summary>
+    /// Default message.
+    /// </summary>
     public WorkItemTitleTooShortException() : base("Title is too short, it cannot be less than 3 characters.") { }
-    
-    public WorkItemTitleTooShortException(string message) : base(message) { }
-    
-    public WorkItemTitleTooShortException(string message, Exception innerException) : base(message, innerException) { }
-    
-    protected WorkItemTitleTooShortException(SerializationInfo info, StreamingContext context) : base(info, context) { }
 }
