@@ -30,6 +30,7 @@ public class UpdateBoardEndpoint(ICommandDispatcher dispatcher) : ApiEndpoint.Wi
         UpdateBoardResponse response = new UpdateBoardResponse
         {
             Id = ""+cmdResult.Value.Id,
+            Title = cmdResult.Value.Title,
         };
 
         return Ok(response);
@@ -45,4 +46,5 @@ public record UpdateBoardRequest
 public record UpdateBoardResponse
 {
     public string? Id { get; init; }
+    public String? Title { get; init; }
 }
