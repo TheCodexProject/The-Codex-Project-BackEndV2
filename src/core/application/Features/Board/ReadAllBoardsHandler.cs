@@ -7,9 +7,9 @@ using domain.interfaces;
 
 namespace application.features.board;
 
-public class ReadAllBoardsHandler(IUnitOfWork unitOfWork) : ICommandHandler<ReadAllBoardCommand>
+public class ReadAllBoardsHandler(IUnitOfWork unitOfWork) : ICommandHandler<ReadAllBoardsCommand>
 {
-    public async Task<Result> HandleAsync(ReadAllBoardCommand command)
+    public async Task<Result> HandleAsync(ReadAllBoardsCommand command)
     {
         try
         {
