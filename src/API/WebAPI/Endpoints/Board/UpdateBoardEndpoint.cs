@@ -13,7 +13,7 @@ public class UpdateBoardEndpoint(ICommandDispatcher dispatcher) : ApiEndpoint.Wi
     [HttpPost("workspace/{id}")]
     public override async Task<ActionResult<UpdateBoardResponse>> HandleAsync(UpdateBoardRequest request)
     {
-        Result<UpdateBoardCommand> cmdResult = UpdateBoardCommand.Create(Id: request.Id, Title: request.Title);
+        Result<UpdateBoardCommand> cmdResult = UpdateBoardCommand.Create(id: request.Id, title: request.Title);
         if (cmdResult.IsFailure)
         {
             return BadRequest(cmdResult.Errors);
@@ -29,7 +29,7 @@ public class UpdateBoardEndpoint(ICommandDispatcher dispatcher) : ApiEndpoint.Wi
         // You need to create the response object here
         UpdateBoardResponse response = new UpdateBoardResponse
         {
-            Id = cmdResult.Value.id,
+            Id = ""+cmdResult.Value.Id,
         };
 
         return Ok(response);

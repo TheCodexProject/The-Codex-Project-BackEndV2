@@ -8,26 +8,35 @@ using domain.exceptions.common;
 
 namespace application.features.board;
 
-public class UpdateBoardHandler(IRepository<Board> repository) : ICommandHandler<UpdateBoardCommand>
+public class UpdateBoardHandler(IUnitOfWork unitOfWork) : ICommandHandler<UpdateBoardCommand>
 {
 
     public async Task<Result> HandleAsync(UpdateBoardCommand command)
     {
-          var id = int.Parse(command.id);
-          Board board = await repository.GetByIdAsync(id);
+        try
+        {
+            // Retrieve the board to update
+            Board? board = await unitOfWork.Boards.GetByIdAsync(command.Id);
 
-          if (board == null)
-          {
-            return Result.Failure(new NotFoundException("Board not found."));
-          }
+            // Check if the board exists
+            if (board == null)
+            {
+                return Result.Failure(new NotFoundException("Board not found."));
+            }
 
-          if (command.title != null)
-          {
-              board.UpdateTitle(command.title);
-          }
+            if (command.Title != null)
+            {
+                board.UpdateTitle(command.Title);
+            }
 
-          await repository.AddAsync(board);
-          return Result.Success();
-       }
+            await unitOfWork.SaveChangesAsync();
+
+            return Result.Success();
+        }
+        catch (Exception ex)
+        {
+            // Log the exception if needed
+            return Result.Failure(new ApplicationException("An error occurred while updating the board.", ex));
+        }
     }
 }

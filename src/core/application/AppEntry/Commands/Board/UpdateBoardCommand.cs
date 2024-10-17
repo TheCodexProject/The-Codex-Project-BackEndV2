@@ -6,26 +6,35 @@ namespace application.appEntry.commands.board;
 
 public class UpdateBoardCommand
 {
-    public string id { get; set; }
-    public string? title { get; set; }
+    public Guid Id { get; set; }
+    public string? Title { get; set; }
 
-    public UpdateBoardCommand(string Id, string? Title)
+    public UpdateBoardCommand(Guid id, string? title)
     {
-        this.id = Id;
-        this.title = Title;
+        this.Id = id;
+        this.Title = title;
     }
 
-    public static Result<UpdateBoardCommand> Create(string Id, string? Title)
+    public static Result<UpdateBoardCommand> Create(string id, string? title)
     {
-        var workspaceTitleResult = BoardValidator.ValidateTitle(Title);
-
-        if (workspaceTitleResult.IsSuccess)
+        // Validate that the input is a valid GUID
+        if (!Guid.TryParse(id, out Guid parsedId))
         {
-            return Result<UpdateBoardCommand>.Success(new UpdateBoardCommand(Id, Title));
+            return Result<UpdateBoardCommand>.Failure(new Exception("Invalid GUID format for Id."));
         }
 
         List<Exception> errors = [];
-        errors.AddRange(workspaceTitleResult.Errors);
+        if (title != null)
+        {
+            var workspaceTitleResult = BoardValidator.ValidateTitle(title);
+
+            if (workspaceTitleResult.IsSuccess)
+            {
+                return Result<UpdateBoardCommand>.Success(new UpdateBoardCommand(parsedId, title));
+            }
+
+            errors.AddRange(workspaceTitleResult.Errors);
+        }
         return Result<UpdateBoardCommand>.Failure(errors.ToArray());
     }
 }
