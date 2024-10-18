@@ -6,10 +6,10 @@ using WebAPI.Endpoints.Common;
 
 namespace webAPI.endpoints.board;
 
-public class ReadAllBoardEndpoint(ICommandDispatcher dispatcher) : ApiEndpoint.WithRequest<ReadAllBoardRequest>.WithResponse<ReadAllBoardResponse>
+public class ReadAllBoardEndpoint(ICommandDispatcher dispatcher) : ApiEndpoint.WithoutRequest.WithResponse<ReadAllBoardResponse>
 {
-    [HttpPost("workspace")]
-    public override async Task<ActionResult<ReadAllBoardResponse>> HandleAsync(ReadAllBoardRequest request)
+    [HttpPost("workspace/readAll")]
+    public override async Task<ActionResult<ReadAllBoardResponse>> HandleAsync()
     {
         // Create the command
         Result<ReadAllBoardsCommand> cmdResult = ReadAllBoardsCommand.Create();
@@ -20,7 +20,7 @@ public class ReadAllBoardEndpoint(ICommandDispatcher dispatcher) : ApiEndpoint.W
 
         // Dispatch the command
         Result result = await dispatcher.DispatchAsync(cmdResult.Value);
-
+        
         if (result.IsFailure)
         {
             return BadRequest(result.Errors);
@@ -41,12 +41,6 @@ public class ReadAllBoardEndpoint(ICommandDispatcher dispatcher) : ApiEndpoint.W
 
         return Ok(response);
     }
-}
-
-public record ReadAllBoardRequest
-{
-    [FromRoute] public required string Id { get; set; }
-    [FromBody] public String? Title { get; init; }
 }
 
 public record ReadAllBoardResponse

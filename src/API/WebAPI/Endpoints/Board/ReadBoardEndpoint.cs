@@ -10,7 +10,7 @@ namespace webAPI.endpoints.board;
 
 public class ReadBoardEndpoint(ICommandDispatcher dispatcher) : ApiEndpoint.WithRequest<ReadBoardRequest>.WithResponse<ReadBoardResponse>
 {
-    [HttpPost("workspace/{id}")]
+    [HttpPost("workspace/{id}/read")]
     public override async Task<ActionResult<ReadBoardResponse>> HandleAsync(ReadBoardRequest request)
     {
         Result<ReadBoardCommand> cmdResult = ReadBoardCommand.Create(id: request.Id);

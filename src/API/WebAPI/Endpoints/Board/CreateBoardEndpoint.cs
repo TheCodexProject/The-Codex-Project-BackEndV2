@@ -8,7 +8,7 @@ namespace webAPI.endpoints.board;
 
 public class CreateBoardEndpoint(ICommandDispatcher dispatcher) : ApiEndpoint.WithRequest<CreateBoardRequest>.WithResponse<CreateBoardResponse>
 {
-    [HttpPost("workspace")]
+    [HttpPost("workspace/create")]
     public override async Task<ActionResult<CreateBoardResponse>> HandleAsync(CreateBoardRequest request)
     {
         Result<CreateBoardCommand> cmdResult = CreateBoardCommand.Create(title: request.Title);

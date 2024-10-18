@@ -10,7 +10,7 @@ namespace webAPI.endpoints.board;
 
 public class UpdateBoardEndpoint(ICommandDispatcher dispatcher) : ApiEndpoint.WithRequest<UpdateBoardRequest>.WithResponse<UpdateBoardResponse>
 {
-    [HttpPost("workspace/{id}")]
+    [HttpPost("workspace/{id}/update")]
     public override async Task<ActionResult<UpdateBoardResponse>> HandleAsync(UpdateBoardRequest request)
     {
         Result<UpdateBoardCommand> cmdResult = UpdateBoardCommand.Create(id: request.Id, title: request.Title);

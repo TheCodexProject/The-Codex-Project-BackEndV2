@@ -9,7 +9,7 @@ namespace webAPI.endpoints.board;
 
 public class DeleteBoardEndpoint(ICommandDispatcher dispatcher) : ApiEndpoint.WithRequest<DeleteBoardRequest>.WithoutResponse
 {
-    [HttpPost("workspace/{id}")]
+    [HttpPost("workspace/{id}/delete")]
     public override async Task<ActionResult> HandleAsync(DeleteBoardRequest request)
     {
         Result<DeleteBoardCommand> cmdResult = DeleteBoardCommand.Create(id: request.Id);
