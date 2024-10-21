@@ -31,7 +31,7 @@ public class EfcDbContext : DbContext
     {
         if (!optionsBuilder.IsConfigured)
         {
-            optionsBuilder.UseSqlite("Data Source=localdb.db");
+            optionsBuilder.UseSqlite("Data Source=..\\..\\..\\..\\..\\..\\src\\infrastructure\\EntityFrameworkCore\\localdb.db");
         }
     }
 
