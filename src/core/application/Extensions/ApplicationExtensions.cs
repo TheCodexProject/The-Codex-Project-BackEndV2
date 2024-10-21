@@ -16,6 +16,7 @@ public static class ApplicationExtensions
         services.AddScoped<ICommandHandler<GetUserCommand>, GetUserHandler>();
         services.AddScoped<ICommandHandler<GetAllUsersCommand>, GetAllUsersHandler>();
         services.AddScoped<ICommandHandler<UpdateUserCommand>, UpdateUserHandler>();
+        services.AddScoped<ICommandHandler<DeleteUserCommand>, DeleteUserHandler>();
     }
 
 
