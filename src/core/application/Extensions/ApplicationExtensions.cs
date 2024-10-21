@@ -14,6 +14,7 @@ public static class ApplicationExtensions
         // services.AddScoped<ICommandHandler<CreateWorkItemHandler>,CreateWorkItemHandler>();
         services.AddScoped<ICommandHandler<CreateUserCommand>, CreateUserHandler>();
         services.AddScoped<ICommandHandler<GetUserCommand>, GetUserHandler>();
+        services.AddScoped<ICommandHandler<GetAllUsersCommand>, GetAllUsersHandler>();
     }
 
 
