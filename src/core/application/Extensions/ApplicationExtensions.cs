@@ -13,6 +13,7 @@ public static class ApplicationExtensions
         // TODO: Register command handlers here like this:
         // services.AddScoped<ICommandHandler<CreateWorkItemHandler>,CreateWorkItemHandler>();
         services.AddScoped<ICommandHandler<CreateUserCommand>, CreateUserHandler>();
+        services.AddScoped<ICommandHandler<GetUserCommand>, GetUserHandler>();
     }
 
 
