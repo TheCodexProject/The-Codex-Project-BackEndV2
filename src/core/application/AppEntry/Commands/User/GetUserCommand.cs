@@ -17,17 +17,17 @@ public class GetUserCommand
     /// <summary>
     /// The User's first name.
     /// </summary>
-    public string FirstName { get; set; } = Empty;
+    public string? FirstName { get; set; } = Empty;
 
     /// <summary>
     /// The User's last name.
     /// </summary>
-    public string LastName { get; set; } = Empty;
+    public string? LastName { get; set; } = Empty;
 
     /// <summary>
     /// The User's email.
     /// </summary>
-    public string Email { get; set; } = Empty;
+    public string? Email { get; set; } = Empty;
 
     private GetUserCommand(Guid uid)
     {

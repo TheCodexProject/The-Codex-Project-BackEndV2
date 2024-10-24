@@ -32,4 +32,4 @@ public class GetUserEndpoint(ICommandDispatcher dispatcher) : ApiEndpoint.WithRo
     }
 }
 
-public record GetUserResponse(string Uid, string FirstName, string LastName, string Email);
+public record GetUserResponse(string Uid, string? FirstName, string? LastName, string? Email);
