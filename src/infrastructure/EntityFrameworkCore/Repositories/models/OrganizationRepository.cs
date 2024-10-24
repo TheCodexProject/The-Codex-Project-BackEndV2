@@ -13,7 +13,7 @@ public class OrganizationRepository(EfcDbContext context) : IRepository<Organiza
     public async Task<IEnumerable<Organization>> GetAllAsync()
     {
         // * Get all organizations from the database.
-        return await context.Organisations.ToListAsync();
+        return await context.Organizations.ToListAsync();
     }
     /// <summary>
     /// Gets a specific organization by their uid.
@@ -23,7 +23,7 @@ public class OrganizationRepository(EfcDbContext context) : IRepository<Organiza
     public async Task<Organization?> GetByIdAsync(Guid uid)
     {
         // * Find an organization by their uid.
-        return await context.Organisations.FirstOrDefaultAsync(organization => organization.Uid == uid);
+        return await context.Organizations.FirstOrDefaultAsync(organization => organization.Uid == uid);
     }
 
     /// <summary>
@@ -33,7 +33,7 @@ public class OrganizationRepository(EfcDbContext context) : IRepository<Organiza
     public async Task AddAsync(Organization toAdd)
     {
         // * Add an organization to the database.
-        await context.Organisations.AddAsync(toAdd);
+        await context.Organizations.AddAsync(toAdd);
     }
 
     /// <summary>
@@ -43,7 +43,7 @@ public class OrganizationRepository(EfcDbContext context) : IRepository<Organiza
     public void Update(Organization toUpdate)
     {
         // * Update an organization in the database.
-        context.Organisations.Update(toUpdate);
+        context.Organizations.Update(toUpdate);
     }
 
     /// <summary>
@@ -53,6 +53,6 @@ public class OrganizationRepository(EfcDbContext context) : IRepository<Organiza
     public void Remove(Organization toRemove)
     {
         // * Remove an organization from the database.
-        context.Organisations.Remove(toRemove);
+        context.Organizations.Remove(toRemove);
     }
 }

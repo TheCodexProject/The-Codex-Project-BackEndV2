@@ -20,7 +20,7 @@ public class EfcDbContext : DbContext
     public DbSet<WorkItem> WorkItems { get; init; }
     public DbSet<Resource> Resources { get; init; }
     public DbSet<Project> Projects { get; init; }
-    public DbSet<Organization> Organisations { get; init; }
+    public DbSet<Organization> Organizations { get; init; }
     public DbSet<Milestone> Milestones { get; init; }
     public DbSet<Iteration> Iterations { get; init; }
     public DbSet<Board> Boards { get; init; }

@@ -8,6 +8,8 @@
 
     <ItemGroup>
       <Folder Include="AppEntry\" />
+      <Folder Include="AppEntry\Commands\Organization\" />
+      <Folder Include="Features\Organization\" />
     </ItemGroup>
 
     <ItemGroup>

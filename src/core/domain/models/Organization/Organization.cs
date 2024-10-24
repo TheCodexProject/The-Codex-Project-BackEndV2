@@ -50,13 +50,13 @@ public class Organization
     #region Relations
 
     /// <summary>
-    /// The owners of the organisation.
+    /// The owners of the organization.
     /// (Lazy loaded)
     /// </summary>
     public virtual List<User> Owners { get; private set; } = [];
 
     /// <summary>
-    /// The resources of the organisation.
+    /// The resources of the organization.
     /// (Lazy loaded)
     /// </summary>
     public virtual List<Resource> Resources { get; private set; } = [];

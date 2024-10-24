@@ -1,4 +1,5 @@
 ﻿using domain.exceptions.common;
+using domain.exceptions.models.Organization;
 using domain.exceptions.models.organization.organizationname;
 using domain.models.user;
 using domain.models.resource;
@@ -55,6 +56,12 @@ public class OrganizationValidator
         if (owner.Uid == Guid.Empty)
         {
             return Result<User>.Failure(new NotFoundException("The provided owner is invalid. Guid cannot be empty."));
+        }
+
+        // ? If there is only one owner, it cannot be removed.
+        if (owners.Count == 1)
+        {
+            return Result<User>.Failure(new OrganizationNeedsAtLeastOneOwnerException());
         }
 
         // ? Does the owner exist in the list?
