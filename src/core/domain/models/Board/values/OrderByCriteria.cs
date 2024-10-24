@@ -14,7 +14,7 @@ public class OrderByCriteria
     public Guid BoardUid { get; private set; }
 
     [Required]
-    public string PropertyName { get; set; }
+    public string? PropertyName { get; set; }
 
     [Required]
     public bool IsAscending { get; set; }

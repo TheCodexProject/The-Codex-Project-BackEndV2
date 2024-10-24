@@ -268,7 +268,7 @@ public class WorkItemModelTests
         var workItem = WorkItem.Create();
 
         // Act
-        workItem.AssignTo(null);
+        workItem.AssignTo(null!);
 
         // Assert
         Assert.True(workItem.AssignedTo == null);

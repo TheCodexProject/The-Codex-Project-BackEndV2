@@ -60,7 +60,7 @@ public class BoardModelTests
         var board = Board.Create();
 
         // Act
-        var result = board.AddFilterCriterias(null);
+        var result = board.AddFilterCriterias(null!);
 
         // Assert
         Assert.True(result.IsFailure);
@@ -133,7 +133,7 @@ public class BoardModelTests
         var board = Board.Create();
 
         // Act
-        var result = board.AddOrderByCriterias(null);
+        var result = board.AddOrderByCriterias(null!);
 
         // Assert
         Assert.True(result.IsFailure);

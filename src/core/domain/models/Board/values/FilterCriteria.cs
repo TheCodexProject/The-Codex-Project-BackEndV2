@@ -14,13 +14,13 @@ public class FilterCriteria
     public Guid BoardUid { get; private set; }
 
     [Required]
-    public string PropertyName { get; set; }
+    public string? PropertyName { get; set; }
 
     [Required]
-    public string Operator { get; set; } // e.g., "Equals", "Contains", etc.
+    public string? Operator { get; set; } // e.g., "Equals", "Contains", etc.
 
     [Required]
-    public string Value { get; set; }
+    public string? Value { get; set; }
 
     private FilterCriteria() { 
         Uid = Guid.NewGuid();
